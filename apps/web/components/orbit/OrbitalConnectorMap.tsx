@@ -1,0 +1,74 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { connectorCategories, type ConnectorCategory } from '@isaak/content';
+
+export function OrbitalConnectorMap() {
+  const [active, setActive] = useState<ConnectorCategory>(connectorCategories[0]!);
+
+  return (
+    <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+      <div className="relative mx-auto flex h-[380px] w-[380px] max-w-full items-center justify-center sm:h-[440px] sm:w-[440px]">
+        <div className="absolute inset-0 animate-orbit-spin rounded-full border border-copper/20" />
+        <div className="absolute inset-8 rounded-full border border-camel/20" />
+        <div className="absolute flex h-16 w-16 items-center justify-center rounded-full bg-chocolate text-cream shadow-lift">
+          <span className="font-serif-display text-sm">Isaak</span>
+        </div>
+
+        {connectorCategories.map((category, index) => {
+          const angle = (index / connectorCategories.length) * Math.PI * 2;
+          const radius = 42;
+          const x = 50 + radius * Math.cos(angle);
+          const y = 50 + radius * Math.sin(angle);
+          const isActive = active.id === category.id;
+
+          return (
+            <motion.button
+              key={category.id}
+              type="button"
+              onMouseEnter={() => setActive(category)}
+              onFocus={() => setActive(category)}
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${x}%`, top: `${y}%` }}
+              whileHover={{ scale: 1.08 }}
+            >
+              <span
+                className={`block max-w-[6.5rem] rounded-full border px-3 py-1.5 text-center text-[11px] font-medium leading-tight shadow-glass transition-colors ${
+                  isActive
+                    ? 'border-isaak-blue bg-isaak-blue text-cream'
+                    : 'border-camel/40 bg-cream text-chocolate'
+                }`}
+              >
+                {category.label}
+              </span>
+            </motion.button>
+          );
+        })}
+      </div>
+
+      <motion.div
+        key={active.id}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35 }}
+        className="rounded-2xl border border-camel/30 bg-cream/70 p-6 shadow-glass"
+      >
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-copper">
+          {active.label}
+        </p>
+        <p className="mt-3 text-base text-chocolate/80">{active.description}</p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {active.examples.map((example) => (
+            <span
+              key={example}
+              className="rounded-full bg-beige/60 px-3 py-1 text-xs text-chocolate/70"
+            >
+              {example}
+            </span>
+          ))}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
