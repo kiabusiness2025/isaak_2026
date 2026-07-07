@@ -31,7 +31,7 @@ export function PreciosPageClient() {
   const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
 
   const visiblePlans = plans.filter((plan) => plan.tab === tab);
-  const comparisonTable = comparisonTables.find((table) => table.tab === tab)!;
+  const comparisonTable = comparisonTables.find((table) => table.tab === tab) ?? comparisonTables[0];
   const selectedQuizOption = planSelectorQuiz.options.find((o) => o.id === quizAnswer);
 
   return (
@@ -80,7 +80,7 @@ export function PreciosPageClient() {
               title={`Todo lo que incluye cada plan de ${pricingHeader.tabs[tab]}`}
             />
             <div className="mt-8">
-              <PricingComparisonTable table={comparisonTable} />
+              {comparisonTable && <PricingComparisonTable table={comparisonTable} />}
             </div>
           </div>
         </ScrollReveal>
@@ -102,7 +102,7 @@ export function PreciosPageClient() {
                   <p className="font-serif-display text-lg font-semibold text-chocolate">
                     {addOn.label}
                   </p>
-                  <p className="mt-1 text-sm font-medium text-isaak-blue">{addOn.price}</p>
+                  <p className="mt-1 text-sm font-medium text-copper">{addOn.price}</p>
                   <p className="mt-1 text-xs text-chocolate/55">Aplica a: {addOn.appliesTo}</p>
                 </GlassCard>
               ))}
@@ -159,7 +159,7 @@ export function PreciosPageClient() {
             <ul className="mt-6 grid gap-2 sm:grid-cols-2">
               {pricingConditions.bullets.map((bullet) => (
                 <li key={bullet} className="flex items-start gap-2 text-sm text-chocolate/75">
-                  <span className="mt-0.5 text-isaak-blue">✓</span>
+                  <span className="mt-0.5 text-copper">✓</span>
                   {bullet}
                 </li>
               ))}

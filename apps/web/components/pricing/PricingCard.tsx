@@ -76,7 +76,7 @@ export function PricingCard({ plan, cadence }: PricingCardProps) {
       <ul className="relative mt-6 flex-1 space-y-2.5">
         {plan.featuresIncluded.map((feature) => (
           <li key={feature} className="flex items-start gap-2 text-sm text-chocolate/80">
-            <span className="mt-0.5 text-isaak-blue">✓</span>
+            <span className="mt-0.5 text-copper">✓</span>
             {feature}
           </li>
         ))}

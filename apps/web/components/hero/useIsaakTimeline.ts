@@ -21,6 +21,8 @@ const DEFAULT_SEQUENCE: Step[] = [
 export function useIsaakTimeline(sequence: Step[] = DEFAULT_SEQUENCE) {
   const [state, setState] = useState<IsaakCharacterState>(sequence[0]?.state ?? 'idle');
   const indexRef = useRef(0);
+  const sequenceRef = useRef(sequence);
+  sequenceRef.current = sequence;
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -29,18 +31,18 @@ export function useIsaakTimeline(sequence: Step[] = DEFAULT_SEQUENCE) {
     let timeoutId: ReturnType<typeof setTimeout>;
 
     function advance() {
-      const step = sequence[indexRef.current];
+      const currentSequence = sequenceRef.current;
+      const step = currentSequence[indexRef.current];
       if (!step) return;
       setState(step.state);
       timeoutId = setTimeout(() => {
-        indexRef.current = (indexRef.current + 1) % sequence.length;
+        indexRef.current = (indexRef.current + 1) % currentSequence.length;
         advance();
       }, step.duration);
     }
 
     advance();
     return () => clearTimeout(timeoutId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return state;

@@ -34,7 +34,7 @@ export function CreditsSection() {
               <p className="font-serif-display text-lg font-semibold text-chocolate">
                 {pack.label}
               </p>
-              <p className="mt-1 text-sm font-medium text-isaak-blue">{pack.price}</p>
+              <p className="mt-1 text-sm font-medium text-copper">{pack.price}</p>
               <p className="mt-1 text-xs text-chocolate/55">{pack.recommendedFor}</p>
             </div>
           ))}

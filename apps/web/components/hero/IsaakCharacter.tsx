@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
 export type IsaakCharacterState = 'idle' | 'listening' | 'preparing' | 'connecting' | 'confirmed';
@@ -32,22 +32,26 @@ function usePrefersReducedMotion() {
 export function IsaakCharacter({ size = 260, state = 'idle' }: IsaakCharacterProps) {
   const reducedMotion = usePrefersReducedMotion();
   const [blinking, setBlinking] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const scheduleRef = useRef<ReturnType<typeof setTimeout>>();
+  const closeRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     if (reducedMotion) return undefined;
 
     function scheduleBlink() {
       const delay = 8000 + Math.random() * 4000;
-      timeoutRef.current = setTimeout(() => {
+      scheduleRef.current = setTimeout(() => {
         setBlinking(true);
-        setTimeout(() => setBlinking(false), 140);
+        closeRef.current = setTimeout(() => setBlinking(false), 140);
         scheduleBlink();
       }, delay);
     }
 
     scheduleBlink();
-    return () => clearTimeout(timeoutRef.current);
+    return () => {
+      clearTimeout(scheduleRef.current);
+      clearTimeout(closeRef.current);
+    };
   }, [reducedMotion]);
 
   const headTilt = state === 'listening' ? -6 : 0;
