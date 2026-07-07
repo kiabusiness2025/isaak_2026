@@ -1,34 +1,38 @@
 'use client';
 
 import { useState } from 'react';
-import { pricingPlans, pricingHeader, type BillingCadence } from '@isaak/content';
+import { plans, pricingHeader, type BillingCadence, type UsageTab } from '@isaak/content';
+import { PricingTabs } from './PricingTabs';
+import { PricingBillingToggle } from './PricingBillingToggle';
 import { PricingCard } from './PricingCard';
 
 export function PricingTable() {
+  const [tab, setTab] = useState<UsageTab>('personal');
   const [cadence, setCadence] = useState<BillingCadence>('monthly');
+
+  const visiblePlans = plans.filter((plan) => plan.tab === tab);
 
   return (
     <div>
-      <div className="mx-auto flex w-fit items-center gap-1 rounded-full border border-camel/30 bg-cream/70 p-1">
-        {(['monthly', 'annual'] as BillingCadence[]).map((option) => (
-          <button
-            key={option}
-            type="button"
-            onClick={() => setCadence(option)}
-            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-              cadence === option ? 'bg-isaak-blue text-cream' : 'text-chocolate/70'
-            }`}
-          >
-            {pricingHeader.cadenceCopy[option]}
-          </button>
+      <PricingTabs value={tab} onChange={setTab} />
+
+      <div className="mt-6">
+        <PricingBillingToggle value={cadence} onChange={setCadence} />
+      </div>
+
+      <p className="mt-4 text-center text-sm text-chocolate/60">
+        14 días de prueba en todos los planes de pago. Sin tarjeta para empezar.
+      </p>
+
+      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {visiblePlans.map((plan) => (
+          <PricingCard key={plan.id} plan={plan} cadence={cadence} />
         ))}
       </div>
 
-      <p className="mt-4 text-center text-sm text-chocolate/60">{pricingHeader.trialCopy}</p>
-
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {pricingPlans.map((plan) => (
-          <PricingCard key={plan.id} plan={plan} cadence={cadence} />
+      <div className="mx-auto mt-10 max-w-xl space-y-1 text-center text-xs text-chocolate/50">
+        {pricingHeader.closing.map((line) => (
+          <p key={line}>{line}</p>
         ))}
       </div>
     </div>

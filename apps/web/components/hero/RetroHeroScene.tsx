@@ -5,10 +5,13 @@ import { hero } from '@isaak/content';
 import { IsaakButton } from '@/components/ui/IsaakButton';
 import { OrbitalLines } from './OrbitalLines';
 import { IsaakCharacter } from './IsaakCharacter';
-import { FloatingCards } from './FloatingCards';
+import { FloatingCards, FloatingCardsStrip } from './FloatingCards';
 import { EntrepreneurScenario } from './EntrepreneurScenario';
+import { useIsaakTimeline } from './useIsaakTimeline';
 
 export function RetroHeroScene() {
+  const characterState = useIsaakTimeline();
+
   return (
     <section className="relative overflow-hidden bg-hero-gradient pb-20 pt-16 sm:pb-28 sm:pt-24">
       <div className="mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-2 lg:items-center lg:gap-8">
@@ -16,7 +19,7 @@ export function RetroHeroScene() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-10 max-w-xl"
+          className="relative z-10 min-w-0 max-w-xl"
         >
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-copper">
             {hero.eyebrow}
@@ -38,14 +41,27 @@ export function RetroHeroScene() {
           </div>
 
           <p className="mt-4 text-sm text-chocolate/55">{hero.microcopy}</p>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-8 border-l-2 border-copper/50 pl-4 font-serif-display text-lg italic text-chocolate/70"
+          >
+            No abras diez pestañas. Abre una conversación.
+          </motion.p>
+
+          <div className="mt-8">
+            <FloatingCardsStrip />
+          </div>
         </motion.div>
 
         <div className="relative flex min-h-[420px] items-center justify-center lg:min-h-[560px]">
           <OrbitalLines />
           <FloatingCards />
-          <div className="relative z-10 flex flex-col items-center gap-8">
-            <IsaakCharacter />
-            <div className="w-full max-w-[22rem] lg:absolute lg:-bottom-4 lg:right-[-2rem] lg:max-w-xs">
+          <div className="relative z-10 flex flex-col items-center gap-6">
+            <IsaakCharacter state={characterState} />
+            <div className="w-full max-w-[22rem] lg:max-w-xs lg:translate-x-8">
               <EntrepreneurScenario />
             </div>
           </div>

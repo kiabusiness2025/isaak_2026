@@ -1,47 +1,80 @@
-import { type PricingPlan, type BillingCadence } from '@isaak/content';
+import { type Plan, type BillingCadence } from '@isaak/content';
 import { IsaakButton } from '@/components/ui/IsaakButton';
 import { StatusPill } from '@/components/ui/StatusPill';
 
 type PricingCardProps = {
-  plan: PricingPlan;
+  plan: Plan;
   cadence: BillingCadence;
 };
 
+function formatPrice(plan: Plan, cadence: BillingCadence) {
+  if (plan.monthlyPrice === null || plan.annualPrice === null) {
+    return { headline: 'Próximamente', note: null as string | null };
+  }
+  if (plan.monthlyPrice === 0) {
+    return { headline: '0 €', note: null };
+  }
+  if (cadence === 'monthly') {
+    return { headline: `${plan.monthlyPrice} € + IVA`, note: '/mes' };
+  }
+  const monthlyEquivalent = (plan.annualPrice / 12).toFixed(2).replace('.00', '');
+  return {
+    headline: `${plan.annualPrice} € + IVA`,
+    note: `/año · equivale a ${monthlyEquivalent} €/mes`,
+  };
+}
+
 export function PricingCard({ plan, cadence }: PricingCardProps) {
-  const price = cadence === 'monthly' ? plan.monthlyPrice : plan.annualMonthlyEquivalent;
-  const isFree = price === 0;
-  const isComingSoon = plan.badge === 'proximamente';
+  const price = formatPrice(plan, cadence);
+  const isComingSoon = plan.status === 'proximamente';
+  const isBeta = plan.status === 'beta';
 
   return (
     <div
       className={`flex h-full flex-col rounded-3xl border p-6 shadow-glass ${
-        plan.badge === 'popular'
+        plan.recommended
           ? 'border-isaak-blue bg-isaak-blue/[0.04] shadow-lift'
           : 'border-camel/30 bg-cream/70'
-      }`}
+      } ${isComingSoon ? 'relative overflow-hidden' : ''}`}
     >
-      <div className="flex items-center justify-between gap-2">
+      {isComingSoon && (
+        <div className="pointer-events-none absolute inset-0 bg-copper/[0.06]" aria-hidden="true" />
+      )}
+
+      <div className="relative flex items-center justify-between gap-2">
         <p className="font-serif-display text-xl font-semibold text-chocolate">{plan.name}</p>
-        {plan.badge === 'popular' && <StatusPill tone="ready">Más elegido</StatusPill>}
+        {plan.recommended && <StatusPill tone="ready">Recomendado</StatusPill>}
         {isComingSoon && <StatusPill tone="warning">Próximamente</StatusPill>}
+        {isBeta && <StatusPill tone="warning">Beta privada</StatusPill>}
       </div>
-      <p className="mt-2 text-sm text-chocolate/65">{plan.tagline}</p>
+      <p className="relative mt-2 text-sm text-chocolate/65">{plan.tagline}</p>
 
-      <div className="mt-6 flex items-baseline gap-1">
-        <span className="font-serif-display text-4xl font-semibold text-chocolate">
-          {isFree ? '0€' : `${price}€`}
+      <div className="relative mt-6 flex flex-wrap items-baseline gap-1">
+        <span className="font-serif-display text-3xl font-semibold text-chocolate">
+          {price.headline}
         </span>
-        {!isFree && <span className="text-sm text-chocolate/55">/mes</span>}
+        {price.note && <span className="text-xs text-chocolate/55">{price.note}</span>}
       </div>
-      {cadence === 'annual' && !isFree && (
-        <p className="mt-1 text-xs text-copper">Facturado anualmente · 2 meses gratis</p>
-      )}
-      {plan.trialDays && (
-        <p className="mt-1 text-xs text-chocolate/55">{plan.trialDays} días de prueba</p>
-      )}
 
-      <ul className="mt-6 flex-1 space-y-2.5">
-        {plan.features.map((feature) => (
+      <div className="relative mt-4 grid grid-cols-2 gap-2 text-xs text-chocolate/60">
+        <div>
+          <p className="font-semibold text-copper">Créditos IA</p>
+          <p>{plan.aiCreditsPerMonth}</p>
+        </div>
+        <div>
+          <p className="font-semibold text-copper">Usuarios</p>
+          <p>{plan.usersIncluded}</p>
+        </div>
+        {plan.veriFactuInvoicesPerMonth && (
+          <div className="col-span-2">
+            <p className="font-semibold text-copper">Facturas VeriFactu</p>
+            <p>{plan.veriFactuInvoicesPerMonth}</p>
+          </div>
+        )}
+      </div>
+
+      <ul className="relative mt-6 flex-1 space-y-2.5">
+        {plan.featuresIncluded.map((feature) => (
           <li key={feature} className="flex items-start gap-2 text-sm text-chocolate/80">
             <span className="mt-0.5 text-isaak-blue">✓</span>
             {feature}
@@ -49,13 +82,13 @@ export function PricingCard({ plan, cadence }: PricingCardProps) {
         ))}
       </ul>
 
-      <div className="mt-8">
+      <div className="relative mt-8">
         <IsaakButton
-          href="/demo"
-          variant={plan.badge === 'popular' ? 'primary' : 'secondary'}
+          href={isBeta || isComingSoon ? '/precios#asesorias-beta' : '/demo'}
+          variant={plan.recommended ? 'primary' : 'secondary'}
           className="w-full justify-center"
         >
-          {isFree ? 'Empezar gratis' : isComingSoon ? 'Unirme a la lista' : 'Empezar prueba'}
+          {plan.cta}
         </IsaakButton>
       </div>
     </div>

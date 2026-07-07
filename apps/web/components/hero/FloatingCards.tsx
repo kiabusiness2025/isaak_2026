@@ -46,3 +46,23 @@ export function FloatingCards() {
     </div>
   );
 }
+
+/** Tira horizontal para mobile/tablet — misma información, sin posicionamiento absoluto. */
+export function FloatingCardsStrip() {
+  return (
+    <div className="flex snap-x gap-3 overflow-x-auto pb-2 lg:hidden">
+      {hero.floatingCards.slice(0, 5).map((card, index) => (
+        <motion.div
+          key={card.id}
+          initial={{ opacity: 0, x: 12 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.15 + index * 0.06 }}
+          className="w-40 shrink-0 snap-start rounded-xl border border-beige/70 bg-cream/70 p-3 shadow-glass"
+        >
+          <p className="text-xs font-semibold text-chocolate">{card.label}</p>
+          <p className="mt-1 text-[11px] text-chocolate/60">{card.detail}</p>
+        </motion.div>
+      ))}
+    </div>
+  );
+}

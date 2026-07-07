@@ -66,6 +66,12 @@ export function EntrepreneurJourneySection() {
             <p key={line}>{line}</p>
           ))}
         </div>
+
+        <ScrollReveal delay={0.15}>
+          <p className="mx-auto mt-10 max-w-lg text-center font-serif-display text-xl font-semibold text-chocolate">
+            No abras diez pestañas. Abre una conversación.
+          </p>
+        </ScrollReveal>
       </div>
     </section>
   );

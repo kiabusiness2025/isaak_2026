@@ -16,7 +16,7 @@ export function FinalCTA() {
       <div className="relative mx-auto max-w-3xl px-6 text-center">
         <ScrollReveal>
           <div className="mx-auto mb-8 flex justify-center">
-            <IsaakCharacter size={140} />
+            <IsaakCharacter size={140} state="confirmed" />
           </div>
           <h2 className="font-serif-display text-3xl font-semibold leading-tight sm:text-4xl">
             {finalCta.title}
