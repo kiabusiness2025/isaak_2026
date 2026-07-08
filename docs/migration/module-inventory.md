@@ -19,13 +19,21 @@
 
 | # | Módulo | Origen (`isaak`) | Destino (`isaak_2026`) | Acoplamiento | Estado |
 | - | --- | --- | --- | :---: | :---: |
-| 2.1 | Tipos de tiers/features/quota | `apps/isaak/app/lib/isaak-entitlements.ts` | `packages/billing/src/entitlements.ts` | medio | **auditado** — ver hallazgo crítico abajo |
+| 2.1 | Tipos de tiers/features/quota | `apps/isaak/app/lib/isaak-entitlements.ts` | `packages/billing/src/entitlements.ts` | medio | auditado, **decisión de negocio ya confirmada** (ver abajo) — portar tipos + catálogo pendiente |
 | 2.2 | Copy de precios derivado | `apps/isaak/app/lib/isaak-pricing-content.ts` | — (superseded) | bajo | descartado (ficha #2, `packages/content/src/pricing.ts` ya lo sustituye) |
-| 2.3 | Puente Stripe↔entitlements | `apps/isaak/app/lib/isaak-stripe-plans.ts` | `packages/billing/src/stripe-plans.ts` | medio (`resolvePlanIdForTier` toca Prisma) | pendiente |
+| 2.3 | Puente Stripe↔entitlements | `apps/isaak/app/lib/isaak-stripe-plans.ts` | `packages/billing/src/stripe-plans.ts` | medio (`resolvePlanIdForTier` toca Prisma) | pendiente — desbloqueado, ver `PRICING_POLICY_PROPUESTA_2026.md` |
 | 2.4 | UI de pricing sin fetch | `apps/isaak/app/components/PricingSectionV1.tsx`, `PlanDecisionTree.tsx` | ya reconstruido en `apps/web/components/pricing/*` | bajo | descartado (superseded — no portar, ya hay componentes nuevos) |
-| 2.5 | Motor de cuota/gating | `apps/isaak/app/lib/isaak-quota.ts`, `isaak-turn-tier.ts`, `isaak-credits.ts`, `isaak-billing-helpers.ts`, `isaak-feature-gate.ts` | `packages/billing/src/*` (rediseño) | alto | pendiente — **rediseñar, no extraer** (ver hallazgo crítico) |
+| 2.5 | Motor de cuota/gating | `apps/isaak/app/lib/isaak-quota.ts`, `isaak-turn-tier.ts`, `isaak-credits.ts`, `isaak-billing-helpers.ts`, `isaak-feature-gate.ts` | `packages/billing/src/*` (rediseño) | alto | pendiente — desbloqueado, **rediseñar, no extraer** |
 
-### ⚠️ Hallazgo crítico de la auditoría 2.1 (bloquea 2.1/2.3/2.5 hasta decisión)
+### ✅ Hallazgo crítico de la auditoría 2.1 — RESUELTO (2026-07-08)
+
+Decisión confirmada por el usuario, documentada en
+`docs/product/PRICING_POLICY_PROPUESTA_2026.md`: modelo de créditos ponderados
+(mantenido), precios de "Isaak Plus"/"Isaak Pro Plus" fijados (24€/79€), ambos en
+"Próximamente" sin Price ID de Stripe hasta que sedes/DEHú/certificado estén integrados.
+Ya reflejado en `packages/content/src/pricing.ts` (incluye el renombrado de planes a
+Isaak Chat/Basic/Plus y Isaak Pro/Pro Basic/Pro Plus — `id` internos sin cambios).
+Detalle original de la comparación conservado abajo para contexto histórico.
 
 Comparé línea a línea `isaak-entitlements.ts` (legacy) contra `packages/content/src/pricing.ts`
 (ya escrito en `isaak_2026`). No son reconciliables por simple renombrado — hay dos
