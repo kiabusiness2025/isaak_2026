@@ -21,7 +21,7 @@
 | - | --- | --- | --- | :---: | :---: |
 | 2.1 | Tipos de tiers/features/quota | `apps/isaak/app/lib/isaak-entitlements.ts` | `packages/billing/src/entitlements.ts` | medio | auditado, **decisión de negocio ya confirmada** (ver abajo) — portar tipos + catálogo pendiente |
 | 2.2 | Copy de precios derivado | `apps/isaak/app/lib/isaak-pricing-content.ts` | — (superseded) | bajo | descartado (ficha #2, `packages/content/src/pricing.ts` ya lo sustituye) |
-| 2.3 | Puente Stripe↔entitlements | `apps/isaak/app/lib/isaak-stripe-plans.ts` | `packages/billing/src/stripe-plans.ts` | medio (`resolvePlanIdForTier` toca Prisma) | pendiente — desbloqueado, ver `PRICING_POLICY_PROPUESTA_2026.md` |
+| 2.3 | Puente Stripe↔entitlements | `apps/isaak/app/lib/isaak-stripe-plans.ts` | `packages/billing/src/stripe-plans.ts` | medio (`resolvePlanIdForTier` toca Prisma) | pendiente — **Price ID reales ya creados** para Isaak Basic/Pro/Pro Plus (ver `PRICING_POLICY_PROPUESTA_2026.md` §7), solo falta escribir el módulo |
 | 2.4 | UI de pricing sin fetch | `apps/isaak/app/components/PricingSectionV1.tsx`, `PlanDecisionTree.tsx` | ya reconstruido en `apps/web/components/pricing/*` | bajo | descartado (superseded — no portar, ya hay componentes nuevos) |
 | 2.5 | Motor de cuota/gating | `apps/isaak/app/lib/isaak-quota.ts`, `isaak-turn-tier.ts`, `isaak-credits.ts`, `isaak-billing-helpers.ts`, `isaak-feature-gate.ts` | `packages/billing/src/*` (rediseño) | alto | pendiente — desbloqueado, **rediseñar, no extraer** |
 
