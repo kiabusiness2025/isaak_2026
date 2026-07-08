@@ -15,8 +15,12 @@
 > | Personal | **Isaak Basic** |
 > | Personal Total | **Isaak Plus** |
 > | Profesional | **Isaak Pro** |
-> | Profesional Avanzado | **Isaak Pro Basic** |
-> | Profesional Total | **Isaak Pro Plus** |
+> | Profesional Avanzado | **Isaak Pro Plus** |
+> | Profesional Total | **Isaak Pro Max** |
+>
+> (Ajuste del 2026-07-08, tras confirmar: la línea Profesional pasó de Pro/Pro Basic/Pro
+> Plus a **Pro/Pro Plus/Pro Max** — ver §6, ya no es solo una nota, es la nomenclatura
+> final aplicada.)
 >
 > Los `id` internos (`chat`, `personal`, `personal-total`, `profesional`,
 > `profesional-avanzado`, `profesional-total`) **no cambian** — son los identificadores
@@ -24,18 +28,21 @@
 >
 > Fecha: 2026-07-08.
 
-## 6. Nota sobre "Isaak Pro Basic"
+## 6. Nomenclatura final de la línea Profesional (resuelto 2026-07-08)
 
-Un aviso honesto, no un bloqueo: en la línea Profesional, "Pro Basic" (49€) es *más caro*
-que "Pro" a secas (29€) — semánticamente "Basic" suele leerse como "más barato", aquí es
-al revés. Lo implementé tal cual se pidió porque en la tabla de precios el número va justo
-al lado del nombre (nadie elige un plan solo por el nombre sin mirar el precio), pero si
-en algún momento genera confusión real de usuarios, la alternativa más limpia sería
-reordenar las etiquetas: "Isaak Pro Basic" (29€, entrada) → "Isaak Pro" (49€, el plan
-estándar) → "Isaak Pro Plus" (79€) — mismo vocabulario, orden semántico coherente. No lo
-apliqué de oficio porque cambiaría el plan que hoy es "el recomendado" (`recommended: true`
-sigue en el antiguo "Profesional"/actual "Isaak Pro", 29€) y prefiero que sea una decisión
-explícita, no un efecto colateral de un renombrado.
+Se detectó que "Isaak Pro Basic" (49€) sonaba más barato que "Isaak Pro" (29€) siendo en
+realidad más caro — "Basic" se lee como "menos", no como "más". Confirmado con el usuario,
+la jerarquía final es:
+
+| Precio | Nombre |
+| --- | --- |
+| 29 € | Isaak Pro |
+| 49 € | Isaak Pro Plus |
+| 79 € | Isaak Pro Max |
+
+"Plus" ahora sí significa "más que el base" y "Max" marca sin ambigüedad el tier superior
+(sedes electrónicas, DEHú, certificado digital). El plan recomendado (`recommended: true`)
+sigue siendo "Isaak Pro" (29€) — el renombrado no cambia qué plan se destaca.
 
 ## 1. Unidad de cuota: créditos ponderados (confirmar mantener el modelo ya publicado)
 
@@ -128,3 +135,44 @@ Para desbloquear Fase 2 necesito una respuesta a cada punto:
    quedan así, o los ajustas? — **Confirmar / Ajustar (indicar cifra)**
 3. ¿Confirmas que ambos quedan en "Próximamente" (sin Stripe) hasta que sedes/DEHú/
    certificado estén realmente integrados? — **Sí/No**
+
+## 7. Price ID de Stripe creados (2026-07-08, cuenta "Verifactu Business", modo live)
+
+Creados tras autorizar el conector de Stripe. **Solo para los 3 planes ya activos**
+(Isaak Basic/Pro/Pro Plus) — Isaak Plus e Isaak Pro Max quedan sin Stripe hasta que se
+activen, tal como fija el punto 3 de arriba.
+
+**Aviso de contexto importante encontrado al crear esto**: la cuenta "Verifactu Business"
+ya tenía productos/precios reales y en producción (`Isaak Personal` 15€/150€, `Isaak Pro`
+29€/290€, `Isaak Profesional Total` 49€/490€ con sedes/DEHú/certificado) que parecen ser
+el catálogo de facturación actual del `isaak` legacy. Por decisión explícita del usuario,
+los productos de abajo son **objetos nuevos e independientes** — no se reutilizó ni se
+tocó ningún objeto existente de legacy. Todos llevan `metadata.source = "isaak_2026"` para
+distinguirlos en el dashboard de Stripe.
+
+| Plan | Product ID | Price mensual | Price anual |
+| --- | --- | --- | --- |
+| Isaak Basic (15€/150€) | `prod_UqlOjaXnQpOvxE` | `price_1Tr3stBGArwrQhIWuX5THzUb` (`isaak2026_basic_monthly`) | `price_1Tr3tLBGArwrQhIWM2LBZHjf` (`isaak2026_basic_annual`) |
+| Isaak Pro (29€/290€) | `prod_UqlOYHermm0Bk6` | `price_1Tr3tiBGArwrQhIWG5WzSywk` (`isaak2026_pro_monthly`) | `price_1Tr3uABGArwrQhIW9E6ufHEZ` (`isaak2026_pro_annual`) |
+| Isaak Pro Plus (49€/490€) | `prod_UqlP6eXqzCsHWk` | `price_1Tr3uZBGArwrQhIWL2wcmMTe` (`isaak2026_proplus_monthly`) | `price_1Tr3uxBGArwrQhIWV2Y8xmc4` (`isaak2026_proplus_annual`) |
+
+Todos: EUR, recurrente, `tax_behavior: exclusive` (precios "+ IVA", consistente con
+`pricingConditions` en `pricing.ts`). `default_price` de cada producto apunta al precio
+mensual.
+
+**Convención de env var propuesta** para cuando se escriba
+`packages/billing/src/stripe-plans.ts` (Fase 2.3), siguiendo el patrón de legacy
+(`STRIPE_PRICE_ISAAK_PERSONAL_MONTHLY`):
+
+```text
+STRIPE_PRICE_ISAAK2026_BASIC_MONTHLY=price_1Tr3stBGArwrQhIWuX5THzUb
+STRIPE_PRICE_ISAAK2026_BASIC_ANNUAL=price_1Tr3tLBGArwrQhIWM2LBZHjf
+STRIPE_PRICE_ISAAK2026_PRO_MONTHLY=price_1Tr3tiBGArwrQhIWG5WzSywk
+STRIPE_PRICE_ISAAK2026_PRO_ANNUAL=price_1Tr3uABGArwrQhIW9E6ufHEZ
+STRIPE_PRICE_ISAAK2026_PROPLUS_MONTHLY=price_1Tr3uZBGArwrQhIWL2wcmMTe
+STRIPE_PRICE_ISAAK2026_PROPLUS_ANNUAL=price_1Tr3uxBGArwrQhIWV2Y8xmc4
+```
+
+Price ID no son secretos (solo funcionan junto a la clave privada de la cuenta), así que
+es seguro tenerlos en texto en este documento — la clave privada de Stripe nunca se pasa
+por aquí ni se commitea en ningún sitio del repo.

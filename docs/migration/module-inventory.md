@@ -21,7 +21,7 @@
 | - | --- | --- | --- | :---: | :---: |
 | 2.1 | Tipos de tiers/features/quota | `apps/isaak/app/lib/isaak-entitlements.ts` | `packages/billing/src/entitlements.ts` | medio | auditado, **decisión de negocio ya confirmada** (ver abajo) — portar tipos + catálogo pendiente |
 | 2.2 | Copy de precios derivado | `apps/isaak/app/lib/isaak-pricing-content.ts` | — (superseded) | bajo | descartado (ficha #2, `packages/content/src/pricing.ts` ya lo sustituye) |
-| 2.3 | Puente Stripe↔entitlements | `apps/isaak/app/lib/isaak-stripe-plans.ts` | `packages/billing/src/stripe-plans.ts` | medio (`resolvePlanIdForTier` toca Prisma) | pendiente — desbloqueado, ver `PRICING_POLICY_PROPUESTA_2026.md` |
+| 2.3 | Puente Stripe↔entitlements | `apps/isaak/app/lib/isaak-stripe-plans.ts` | `packages/billing/src/stripe-plans.ts` | medio (`resolvePlanIdForTier` toca Prisma) | pendiente — **Price ID reales ya creados** para Isaak Basic/Pro/Pro Plus (ver `PRICING_POLICY_PROPUESTA_2026.md` §7), solo falta escribir el módulo |
 | 2.4 | UI de pricing sin fetch | `apps/isaak/app/components/PricingSectionV1.tsx`, `PlanDecisionTree.tsx` | ya reconstruido en `apps/web/components/pricing/*` | bajo | descartado (superseded — no portar, ya hay componentes nuevos) |
 | 2.5 | Motor de cuota/gating | `apps/isaak/app/lib/isaak-quota.ts`, `isaak-turn-tier.ts`, `isaak-credits.ts`, `isaak-billing-helpers.ts`, `isaak-feature-gate.ts` | `packages/billing/src/*` (rediseño) | alto | pendiente — desbloqueado, **rediseñar, no extraer** |
 
@@ -29,10 +29,10 @@
 
 Decisión confirmada por el usuario, documentada en
 `docs/product/PRICING_POLICY_PROPUESTA_2026.md`: modelo de créditos ponderados
-(mantenido), precios de "Isaak Plus"/"Isaak Pro Plus" fijados (24€/79€), ambos en
+(mantenido), precios de "Isaak Plus"/"Isaak Pro Max" fijados (24€/79€), ambos en
 "Próximamente" sin Price ID de Stripe hasta que sedes/DEHú/certificado estén integrados.
 Ya reflejado en `packages/content/src/pricing.ts` (incluye el renombrado de planes a
-Isaak Chat/Basic/Plus y Isaak Pro/Pro Basic/Pro Plus — `id` internos sin cambios).
+Isaak Chat/Basic/Plus y Isaak Pro/Pro Plus/Pro Max — `id` internos sin cambios).
 Detalle original de la comparación conservado abajo para contexto histórico.
 
 Comparé línea a línea `isaak-entitlements.ts` (legacy) contra `packages/content/src/pricing.ts`
