@@ -17,7 +17,7 @@ export function OrbitalConnectorMap() {
         <div className="absolute inset-8 rounded-full border border-camel/20" />
         <div className="absolute h-16 w-16 overflow-hidden rounded-full border-2 border-copper/40 shadow-lift">
           <Image
-            src={brandAssets.robot.main}
+            src={brandAssets.robot.bust.idle}
             alt="Isaak"
             width={64}
             height={64}

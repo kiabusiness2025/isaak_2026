@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { brandAssets } from '@isaak/brand';
@@ -10,6 +10,18 @@ export type IsaakCharacterState = 'idle' | 'listening' | 'preparing' | 'connecti
 type IsaakCharacterProps = {
   size?: number;
   state?: IsaakCharacterState;
+  /** 'circle' (avatar recortado, por defecto) o 'full' (cuerpo entero, sin marco circular). */
+  variant?: 'circle' | 'full';
+};
+
+type Pose = 'idle' | 'thinking' | 'confirmed';
+
+const POSE_BY_STATE: Record<IsaakCharacterState, Pose> = {
+  idle: 'idle',
+  listening: 'idle',
+  preparing: 'thinking',
+  connecting: 'thinking',
+  confirmed: 'confirmed',
 };
 
 function usePrefersReducedMotion() {
@@ -25,18 +37,23 @@ function usePrefersReducedMotion() {
 }
 
 /**
- * Personaje Isaak — retrato ilustrado real (packages/brand/assets/robot),
- * con microcomportamientos alrededor: inclinación al escuchar, brillo cobre
- * al conectar datos, sello al confirmar. El parpadeo y el movimiento del
- * libro de la versión SVG anterior no son portables a una foto estática;
- * si se necesitan de vuelta, requieren una ilustración por capas (cara,
- * ojos, libro) en vez de un único PNG plano.
+ * Personaje Isaak — retratos ilustrados reales (packages/brand/assets/robot),
+ * uno por gesto (idle, pensando, confirmado) y por formato (busto circular /
+ * cuerpo entero). El estado anima un crossfade entre esas poses reales en vez
+ * de rotar o mover el marco del avatar, para que lo que se mueva sea Isaak,
+ * no el círculo que lo contiene.
  */
-export function IsaakCharacter({ size = 260, state = 'idle' }: IsaakCharacterProps) {
+export function IsaakCharacter({ size = 260, state = 'idle', variant = 'circle' }: IsaakCharacterProps) {
   const reducedMotion = usePrefersReducedMotion();
-  const headTilt = state === 'listening' ? -6 : 0;
+  const pose = POSE_BY_STATE[state];
+  const headTilt = state === 'listening' ? -4 : 0;
   const isConnecting = state === 'connecting';
   const isConfirmed = state === 'confirmed';
+
+  const src = variant === 'full' ? brandAssets.robot.full[pose] : brandAssets.robot.bust[pose];
+  const aspect = variant === 'full' ? 760 / 1000 : 1;
+  const width = variant === 'full' ? Math.round(size * aspect) : size;
+  const height = size;
 
   return (
     <motion.div
@@ -44,7 +61,7 @@ export function IsaakCharacter({ size = 260, state = 'idle' }: IsaakCharacterPro
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
       className="relative"
-      style={{ width: size, height: size }}
+      style={{ width, height }}
     >
       {/* Brillo cobre al conectar datos */}
       <motion.div
@@ -59,26 +76,36 @@ export function IsaakCharacter({ size = 260, state = 'idle' }: IsaakCharacterPro
       />
 
       <motion.div
-        animate={{
-          rotate: reducedMotion ? 0 : [0, 1.2, 0, -1.2, 0],
-        }}
-        transition={{ duration: 9, repeat: reducedMotion ? 0 : Infinity, ease: 'easeInOut' }}
-        className="relative h-full w-full"
+        className={
+          variant === 'circle'
+            ? 'relative h-full w-full overflow-hidden rounded-full border-4 border-copper/40 shadow-[0_20px_40px_rgba(61,42,31,0.18)]'
+            : 'relative h-full w-full'
+        }
+        animate={{ rotate: headTilt }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       >
-        <motion.div
-          className="h-full w-full overflow-hidden rounded-full border-4 border-copper/40 shadow-[0_20px_40px_rgba(61,42,31,0.18)]"
-          animate={{ rotate: headTilt }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <Image
-            src={brandAssets.robot.main}
-            alt="Isaak"
-            width={size}
-            height={size}
-            className="h-full w-full object-cover"
-            priority
-          />
-        </motion.div>
+        <AnimatePresence mode="sync" initial={false}>
+          <motion.div
+            key={pose}
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, scale: reducedMotion ? 1 : [1, 1.01, 1] }}
+            exit={{ opacity: 0 }}
+            transition={{
+              opacity: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+              scale: { duration: 6, repeat: reducedMotion ? 0 : Infinity, ease: 'easeInOut' },
+            }}
+          >
+            <Image
+              src={src}
+              alt="Isaak"
+              width={width}
+              height={height}
+              className={variant === 'circle' ? 'h-full w-full object-cover' : 'h-full w-full object-contain'}
+              priority
+            />
+          </motion.div>
+        </AnimatePresence>
       </motion.div>
 
       {/* Sello de confirmación */}

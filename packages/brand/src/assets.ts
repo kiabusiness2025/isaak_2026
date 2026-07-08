@@ -15,6 +15,15 @@ export const brandAssets = {
   },
   og: '/og/isaak-og.png',
   robot: {
-    main: '/robot/isaak-character-main.png',
+    full: {
+      idle: '/robot/isaak-full-idle.png',
+      thinking: '/robot/isaak-full-thinking.png',
+      confirmed: '/robot/isaak-full-confirmed.png',
+    },
+    bust: {
+      idle: '/robot/isaak-bust-idle.png',
+      thinking: '/robot/isaak-bust-thinking.png',
+      confirmed: '/robot/isaak-bust-confirmed.png',
+    },
   },
 } as const;
