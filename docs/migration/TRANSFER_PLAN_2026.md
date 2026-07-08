@@ -81,7 +81,13 @@ Entregables (ya generados en el repo `isaak`, copiados aquí en este mismo commi
    coincidir con `packages/content/src/pricing.ts`, no con el catálogo antiguo.
 3. Ficha de verificación obligatoria antes de abrir el PR (ver ficha #1).
 4. Validar: `pnpm lint && pnpm typecheck && pnpm build` en verde + revisión manual de que
-   los precios coinciden con los ya publicados en `/precios`.
+   los precios coinciden con los ya publicados en `/precios`, y que las cuotas de
+   mensajes/mes coinciden con el modelo actual de `isaak-entitlements.ts` (verificado
+   línea a línea en el archivo fuente): **300 (Chat) / 400 (Personal) / 600 (Profesional)
+   / 1000 (Profesional Total)**.
+5. Confirmar explícitamente si "Profesional Total" se lanza como plan activo o con badge
+   "Próximamente"/"Acceso anticipado" antes de crear Price IDs de Stripe — no crear IDs
+   para un estado que todavía no está decidido.
 
 ### Fase 3 — Componentes demo
 
@@ -107,6 +113,13 @@ Entregables (ya generados en el repo `isaak`, copiados aquí en este mismo commi
 3. El resto de conectores (Google, Microsoft, AEAT, WhatsApp) se diseñan sobre ese mismo
    contrato genérico, no se migran desde `isaak` (allí viven sueltos en
    `apps/isaak/app/lib/`, sin paquete compartido — ver `reusable-modules.md` §4).
+4. **No** crear una página pública `/conectores/holded` en `apps/web` — elevaría a Holded
+   a protagonista de marketing, justo lo que prohíbe `packages/content/src/copy-guardrails.ts`
+   y la regla "ningún conector domina la narrativa" (`connectors.ts` ya trata a Holded como
+   un ejemplo más entre `Sage`/`A3`/`Odoo`/`Excel`, nunca como categoría propia). Sí es
+   correcto, más adelante, un `apps/app/app/connections/holded` **operativo** (gestión de
+   la conexión ya establecida, no narrativa pública) — eso no viola la regla porque vive
+   en producto autenticado, no en la web de marketing.
 
 ### Fase 5 — Auth (reescritura cuidadosa)
 
@@ -133,9 +146,77 @@ Entregables (ya generados en el repo `isaak`, copiados aquí en este mismo commi
   — **no** `apps/admin/app/dashboard/admin/*` (árbol obsoleto tras un rename, ver
   `deprecated-modules.md` §4).
 
+### Fase 8 — Topología de despliegue (Vercel, un proyecto por app)
+
+Un repo, varios proyectos Vercel — no meter web pública, producto autenticado y admin en
+un único proyecto desde el principio. Alineado con el flujo oficial de monorepos de
+Vercel (root directory por proyecto):
+
+| Proyecto Vercel | Root directory | Dominio |
+| --- | --- | --- |
+| `isaak-retro-web` | `apps/web` | `isaak.es` (ya configurado en `packages/content/src/seo.ts`) |
+| `isaak-retro-app` | `apps/app` | `app.isaak.es` — más adelante, cuando `apps/app` deje de ser esqueleto |
+| `isaak-retro-admin` | `apps/admin` | `admin.isaak.es` — más adelante, Fase 7 |
+
+Razón: un cambio de marketing en `apps/web` no debe poder romper el producto autenticado
+ni el admin, y viceversa — la unificación es de marca/datos/core (packages compartidos),
+no de runtime. Vercel asigna DNS/SSL por proyecto desde su dashboard al conectar cada
+dominio.
+
+### Fase 9 — Migración controlada de usuarios/sesión (`isaak.app` → `isaak.es`)
+
+Punto crítico: `isaak.app` e `isaak.es` son dominios raíz distintos — el cambio de sesión
+entre ellos es una migración real (cookies de sesión, no solo un cambio de subdominio como
+sí lo sería `isaak.chat`→`app.isaak.chat`, ver la regla de mismo-dominio-raíz para
+login/OAuth documentada en `isaak` legacy). Secuencia recomendada:
+
+1. `isaak.app` sigue en producción, sin tocar, durante toda esta fase.
+2. `isaak.es` se lanza como web pública nueva (ya en marcha, Fase 1-3 de este documento).
+3. Los usuarios nuevos entran por `isaak.es` desde el lanzamiento.
+4. `app.isaak.es` se prueba primero solo con cuentas internas (Fase 8, cuando `apps/app`
+   deje de ser esqueleto).
+5. Cuando esté estable, se migra login/billing de usuarios existentes.
+6. Solo entonces se decide si `isaak.app` redirige a `isaak.es` o queda como dominio
+   internacional/alias — no se decide de antemano.
+
+### Fase 10 — Redirección final y limpieza (solo cuando todo esté validado)
+
+1. Confirmar dominio canónico (`isaak.es`) y el rol final de `isaak.app` (alias/redirect
+   o dominio internacional, según lo decidido en la Fase 9).
+2. Crear redirects 301 solo cuando el tráfico real ya esté validado en `isaak.es` — nunca
+   antes.
+3. Archivar (no borrar de inmediato) `apps/client`, los dashboards duplicados y las
+   landings obsoletas identificadas en `deprecated-modules.md`.
+4. Mantener el repo `isaak` como histórico 60-90 días tras el corte antes de considerar
+   cualquier acción adicional sobre él.
+5. Apagar variables/proyectos Vercel del repo legacy que ya no reciban tráfico —
+   inventario primero (`vercel-inventory.md`), apagado progresivo después, nunca de golpe.
+
 ---
 
-## 5. Próximo paso concreto
+## 5. Riesgos principales
+
+| Riesgo | Mitigación |
+| --- | --- |
+| Copiar deuda antigua | Migración por whitelist + ficha de verificación, nunca por copia masiva |
+| Romper producción | `isaak.app` queda intacto hasta el final de la Fase 9 |
+| Duplicar producto otra vez | `isaak.es` es la nueva fuente principal, no "otra landing más" |
+| Inconsistencia de precios | Fuente única: `packages/content/src/pricing.ts` + `packages/billing` |
+| Dominios y sesiones | Separar web/app/admin por subdominios y proyectos Vercel desde el principio (Fase 8) |
+| Vercel duplicado | Inventario (`vercel-inventory.md`) + apagado progresivo, no simultáneo |
+| Código Holded acoplado | `packages/integrations/holded` con tipos `Connector*` genéricos, nunca `Holded*` |
+| Legacy eterno | `apps/client` congelado, no se migra salvo necesidad real y explícita |
+
+## 6. Consideración abierta (sin decidir): ¿`packages/ai`, `events`, `audit`?
+
+Se ha sugerido sumar `packages/ai` (orquestación de LLM/agente compartida), `packages/events`
+(bus de eventos de dominio) y `packages/audit` (trazabilidad de acciones confirmadas —
+relevante para "Isaak prepara. Tú confirmas.") al núcleo común de la Fase 8 original. Esto
+**no estaba en la lista de paquetes ya acordada y scaffoldeada** (`ui/config/auth/db/
+integrations/billing/analytics/testing`). No se añaden esqueletos para estos tres todavía
+— requiere una decisión explícita del usuario antes de crear más estructura vacía.
+
+## 7. Próximo paso concreto
 
 Fase 2, paso 1: auditar `isaak-entitlements.ts` línea a línea contra
 `packages/content/src/pricing.ts` y decidir qué tipos/estructuras se portan. Es el primer
