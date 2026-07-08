@@ -27,9 +27,15 @@ apps/
       layout/          Header/footer
       ui/              Primitivas (botones, cards, badges...)
 packages/
-  brand/               Tokens visuales + assets del personaje Isaak
+  brand/               Tokens visuales + assets de marca (fuente canónica)
     src/{colors,typography,tokens,motion,assets}.ts
-    assets/robot/      PNGs fuente de las poses (ver sección Personaje Isaak)
+    assets/
+      logos/           Wordmark (fuente sin optimizar para web)
+      icons/           Isotipo, app icon, favicon (fuente sin optimizar para web)
+      robot/           Poses del personaje Isaak (ver sección Personaje Isaak)
+      backgrounds/      Mockups de hero/dashboard — sin wireear todavía, solo referencia
+      reference/        Hojas de marca completas + mockup de página — no recortables
+      INVENTORY.md      Estado (approved/candidate) y uso de cada archivo
   content/             Copy versionado, tipado, importado por las páginas
     src/{home,pricing,connectors,faq,personal,profesional,aeat-models,official-sites,seo,copy-guardrails}.ts
 ```
@@ -72,7 +78,9 @@ concreta (siguen existiendo en `packages/content/src/home.ts` para otros usos).
 - **Assets de marca**: origen verificado en `packages/brand/assets/`, servido en
   `apps/web/public/` — nunca editar directamente en `public/` si el archivo viene de
   `packages/brand`. Rutas centralizadas en `packages/brand/src/assets.ts`, nunca hardcodear
-  `/brand/...` o `/robot/...` en un componente.
+  `/brand/...` o `/robot/...` en un componente. No todo lo que hay en `packages/brand/assets/`
+  está wireado en la web todavía — ver `packages/brand/assets/INVENTORY.md` para el estado
+  (`approved` = en uso; `candidate` = fuente disponible, sin componente asignado).
 - **Copy**: todo el copy de producto vive en `packages/content`, tipado — no strings sueltos
   en componentes de página.
 - **Reglas de marca duras** (de `docs/brand/ISAAK_RETRO_CHARACTER_BIBLE_2026.md` en el repo
