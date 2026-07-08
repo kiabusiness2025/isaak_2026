@@ -60,13 +60,15 @@ seguro ahora; portar los **valores** no lo es hasta resolver (a) y (b). Ficha am
 
 | # | Módulo | Origen | Destino | Estado |
 | - | --- | --- | --- | :---: |
-| 3.1 | `IsaakHeroMock.tsx` | `apps/isaak/app/components/` | `apps/web/components/demo/` | pendiente |
-| 3.2 | `IsaakHeroTour.tsx` | ídem | ídem | pendiente |
-| 3.3 | `IsaakOmniChatWidget.tsx` | ídem | ídem | pendiente |
-| 3.4 | `WhatsAppButton.tsx`, `TalkChannels.tsx` | ídem | ídem | pendiente |
-| 3.5 | `FaqAccordion.tsx` | ídem | ya existe equivalente propio en `apps/web` — comparar antes de portar | pendiente |
-| 3.6 | `ComparisonTable.tsx` | ídem | ya existe equivalente propio (`comparisonTables` en `pricing.ts`) | descartado probable — verificar solapamiento antes de portar |
+| 3.1 | `IsaakHeroMock.tsx` | `apps/isaak/app/components/` | `apps/web/components/demo/` | auditado — autocontenido salvo la ruta del avatar (`/brand/isaak-avatar-2.png`); portar apuntando a `robot/isaak-bust-idle.png` (ya existe en `apps/web/public`) |
+| 3.2 | `IsaakHeroTour.tsx` | ídem | `apps/web/components/demo/IsaakHeroTour.tsx` | **migrado** — 100% autocontenido (datos hardcodeados, sin `fetch`), repaletizado a tokens de marca (`isaak-blue`/`chocolate` en vez de `#2361d8`/`#011c67`), `typecheck`+`lint`+`build` en verde. Ficha #3 en `verified-files.md`. Sin wiring a una página todavía — es una decisión de diseño aparte (dónde y con qué copy alrededor), no forma parte de "migrar el componente" |
+| 3.3 | `IsaakOmniChatWidget.tsx` | ídem | `apps/web/components/demo/` | auditado — **bloqueado**: su CTA principal apunta a `/signup`, que no existe todavía en `isaak_2026` (auth es Fase 5). `WORKSPACE_PREFIXES` también asume rutas de `apps/app` que hoy es solo esqueleto. Portar cuando exista un destino real de alta |
+| 3.4 | `WhatsAppButton.tsx` | ídem | — | **descartado** — el propio legacy ya lo marca superseded por `IsaakOmniChatWidget` (ver comentario de cabecera de ese archivo); no migrar por separado |
+| 3.4b | `TalkChannels.tsx` | ídem | `apps/web/components/demo/` | auditado — autocontenido salvo `signupHref` (prop, no import) y depende de `isaak-contact-links` (ya migrado, ver 3.9). Mismo bloqueo que 3.3: sin ruta de alta real todavía, el `signupHref` no tiene destino válido |
+| 3.5 | `FaqAccordion.tsx` | ídem | — | **descartado, confirmado** — `apps/web` ya tiene `components/sections/FaqSection.tsx` y `components/pricing/PricingFaq.tsx` con contenido propio de `isaak_2026`; portar esto lo duplicaría |
+| 3.6 | `ComparisonTable.tsx` | ídem | — | **descartado, confirmado** — `apps/web` ya tiene `components/pricing/PricingComparisonTable.tsx` sobre el modelo de datos de `pricing.ts` (`comparisonTables`), con una forma de datos distinta (por plan, no por categoría booleana); no aporta nada nuevo |
 | 3.7 | `IsaakMarkdown.tsx` | `apps/isaak/app/(workspace)/components/` | `apps/web/components/chat/` (futuro, cuando exista chat real) | pendiente, no urgente |
+| 3.9 | `isaak-contact-links.ts` | `apps/isaak/app/lib/isaak-contact-links.ts` | `packages/content/src/contact-links.ts` | **migrado** — constantes puras (WhatsApp/Telegram con override por env var), sin cambios de lógica. Ficha #4 en `verified-files.md` |
 
 No migrar aún de esta fase: `IsaakDemoChat.tsx`, `ActionPreparedPanel.tsx`,
 `ConfirmationMoment.tsx` ya existen en `isaak_2026` como construcciones nuevas — esta
