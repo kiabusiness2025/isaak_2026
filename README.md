@@ -48,6 +48,26 @@ Antes de portar contenido real a cualquiera de ellos, revisar
 Ver `CLAUDE.md` para el desglose completo de `apps/web/components/`, el sistema de
 poses del personaje Isaak, y las convenciones del proyecto.
 
+## Qué debe vivir en cada parte
+
+| Carpeta | Función |
+| --- | --- |
+| `apps/web` | Web pública de Isaak en `isaak.es` |
+| `apps/app` | Producto autenticado: chat, historial, onboarding, settings ligeros |
+| `apps/admin` | Backoffice interno, soporte, auditoría |
+| `packages/ui` | Componentes visuales compartidos |
+| `packages/brand` | Colores, tipografías, assets, logos, fondos retro |
+| `packages/content` | Copy, precios, FAQ, conectores |
+| `packages/auth` | Sesión, usuarios, permisos |
+| `packages/db` | Prisma/schema/modelos compartidos |
+| `packages/integrations` | Holded, bancos, Google, Microsoft, AEAT, WhatsApp |
+| `packages/billing` | Stripe, planes, entitlements |
+| `packages/testing` | Helpers de test, fixtures, mocks |
+
+`packages/config` (ESLint/TS compartido) y `packages/analytics` (telemetría de producto) no
+tienen todavía una definición de función tan cerrada como las anteriores — ver sus propios
+`README.md` para el estado y las preguntas abiertas.
+
 ## Reglas de migración
 
 1. No se copian carpetas completas del repo `isaak` anterior.
