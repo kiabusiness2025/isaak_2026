@@ -29,10 +29,10 @@
 
 Decisión confirmada por el usuario, documentada en
 `docs/product/PRICING_POLICY_PROPUESTA_2026.md`: modelo de créditos ponderados
-(mantenido), precios de "Isaak Plus"/"Isaak Pro Plus" fijados (24€/79€), ambos en
+(mantenido), precios de "Isaak Plus"/"Isaak Pro Max" fijados (24€/79€), ambos en
 "Próximamente" sin Price ID de Stripe hasta que sedes/DEHú/certificado estén integrados.
 Ya reflejado en `packages/content/src/pricing.ts` (incluye el renombrado de planes a
-Isaak Chat/Basic/Plus y Isaak Pro/Pro Basic/Pro Plus — `id` internos sin cambios).
+Isaak Chat/Basic/Plus y Isaak Pro/Pro Plus/Pro Max — `id` internos sin cambios).
 Detalle original de la comparación conservado abajo para contexto histórico.
 
 Comparé línea a línea `isaak-entitlements.ts` (legacy) contra `packages/content/src/pricing.ts`

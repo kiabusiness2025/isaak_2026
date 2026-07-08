@@ -71,7 +71,7 @@ build" con datos que no se han corrido de verdad.
   ponderados como modelo definitivo y (b) los precios finales — ver
   `docs/product/PRICING_POLICY_PROPUESTA_2026.md`. `packages/content/src/pricing.ts` ya
   refleja ambos (incluye el renombrado de planes a Isaak Chat/Basic/Plus y Isaak Pro/Pro
-  Basic/Pro Plus). Sigue pendiente portar el catálogo de valores real a
+  Plus/Pro Max). Sigue pendiente portar el catálogo de valores real a
   `packages/billing/src/entitlements.ts` — eso ya no está bloqueado por falta de decisión,
   solo por no haberse ejecutado todavía.
 - PR: —

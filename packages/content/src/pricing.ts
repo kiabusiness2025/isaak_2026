@@ -145,7 +145,7 @@ export const plans: Plan[] = [
   {
     id: 'profesional-avanzado',
     tab: 'profesional',
-    name: 'Isaak Pro Basic',
+    name: 'Isaak Pro Plus',
     status: 'activo',
     tagline: 'Más volumen, más usuarios, más empresas y más facturas VeriFactu.',
     monthlyPrice: 49,
@@ -161,12 +161,12 @@ export const plans: Plan[] = [
       'Confirmación reforzada avanzada',
     ],
     featuresExcluded: ['Sedes electrónicas', 'DEHú', 'Certificado digital'],
-    cta: 'Probar Isaak Pro Basic',
+    cta: 'Probar Isaak Pro Plus',
   },
   {
     id: 'profesional-total',
     tab: 'profesional',
-    name: 'Isaak Pro Plus',
+    name: 'Isaak Pro Max',
     status: 'proximamente',
     tagline: 'Sedes electrónicas, DEHú, certificado y presentación guiada.',
     monthlyPrice: 79,
@@ -273,7 +273,7 @@ export const comparisonTables: ComparisonTable[] = [
   },
   {
     tab: 'profesional',
-    planNames: ['Isaak Pro', 'Isaak Pro Basic', 'Isaak Pro Plus'],
+    planNames: ['Isaak Pro', 'Isaak Pro Plus', 'Isaak Pro Max'],
     rows: [
       { label: 'Precio mensual', values: ['29 € + IVA', '49 € + IVA', '79 € + IVA'] },
       { label: 'Usuarios incluidos', values: ['1', '3', 'Por definir'] },
@@ -348,8 +348,8 @@ export const creditsSection = {
 };
 
 export const addOns = [
-  { id: 'usuario', label: 'Usuario adicional', price: '9 € + IVA / mes', appliesTo: 'Isaak Pro e Isaak Pro Basic' },
-  { id: 'empresa', label: 'Empresa adicional', price: '12 € + IVA / mes', appliesTo: 'Isaak Pro e Isaak Pro Basic' },
+  { id: 'usuario', label: 'Usuario adicional', price: '9 € + IVA / mes', appliesTo: 'Isaak Pro e Isaak Pro Plus' },
+  { id: 'empresa', label: 'Empresa adicional', price: '12 € + IVA / mes', appliesTo: 'Isaak Pro e Isaak Pro Plus' },
 ];
 
 export const planSelectorQuiz = {
@@ -369,8 +369,8 @@ export const planSelectorQuiz = {
       label: 'Mi negocio',
       answer: [
         'Elige Isaak Pro si tienes una empresa o eres autónomo.',
-        'Elige Isaak Pro Basic si tienes más usuarios, más facturas o más volumen.',
-        'Espera Isaak Pro Plus si necesitas sedes, certificado y notificaciones oficiales.',
+        'Elige Isaak Pro Plus si tienes más usuarios, más facturas o más volumen.',
+        'Espera Isaak Pro Max si necesitas sedes, certificado y notificaciones oficiales.',
       ],
     },
     {

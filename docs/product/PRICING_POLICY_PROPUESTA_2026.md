@@ -15,8 +15,12 @@
 > | Personal | **Isaak Basic** |
 > | Personal Total | **Isaak Plus** |
 > | Profesional | **Isaak Pro** |
-> | Profesional Avanzado | **Isaak Pro Basic** |
-> | Profesional Total | **Isaak Pro Plus** |
+> | Profesional Avanzado | **Isaak Pro Plus** |
+> | Profesional Total | **Isaak Pro Max** |
+>
+> (Ajuste del 2026-07-08, tras confirmar: la línea Profesional pasó de Pro/Pro Basic/Pro
+> Plus a **Pro/Pro Plus/Pro Max** — ver §6, ya no es solo una nota, es la nomenclatura
+> final aplicada.)
 >
 > Los `id` internos (`chat`, `personal`, `personal-total`, `profesional`,
 > `profesional-avanzado`, `profesional-total`) **no cambian** — son los identificadores
@@ -24,18 +28,21 @@
 >
 > Fecha: 2026-07-08.
 
-## 6. Nota sobre "Isaak Pro Basic"
+## 6. Nomenclatura final de la línea Profesional (resuelto 2026-07-08)
 
-Un aviso honesto, no un bloqueo: en la línea Profesional, "Pro Basic" (49€) es *más caro*
-que "Pro" a secas (29€) — semánticamente "Basic" suele leerse como "más barato", aquí es
-al revés. Lo implementé tal cual se pidió porque en la tabla de precios el número va justo
-al lado del nombre (nadie elige un plan solo por el nombre sin mirar el precio), pero si
-en algún momento genera confusión real de usuarios, la alternativa más limpia sería
-reordenar las etiquetas: "Isaak Pro Basic" (29€, entrada) → "Isaak Pro" (49€, el plan
-estándar) → "Isaak Pro Plus" (79€) — mismo vocabulario, orden semántico coherente. No lo
-apliqué de oficio porque cambiaría el plan que hoy es "el recomendado" (`recommended: true`
-sigue en el antiguo "Profesional"/actual "Isaak Pro", 29€) y prefiero que sea una decisión
-explícita, no un efecto colateral de un renombrado.
+Se detectó que "Isaak Pro Basic" (49€) sonaba más barato que "Isaak Pro" (29€) siendo en
+realidad más caro — "Basic" se lee como "menos", no como "más". Confirmado con el usuario,
+la jerarquía final es:
+
+| Precio | Nombre |
+| --- | --- |
+| 29 € | Isaak Pro |
+| 49 € | Isaak Pro Plus |
+| 79 € | Isaak Pro Max |
+
+"Plus" ahora sí significa "más que el base" y "Max" marca sin ambigüedad el tier superior
+(sedes electrónicas, DEHú, certificado digital). El plan recomendado (`recommended: true`)
+sigue siendo "Isaak Pro" (29€) — el renombrado no cambia qué plan se destaca.
 
 ## 1. Unidad de cuota: créditos ponderados (confirmar mantener el modelo ya publicado)
 
