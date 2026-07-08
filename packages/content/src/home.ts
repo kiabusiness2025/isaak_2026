@@ -117,7 +117,7 @@ export const connectorsSection = {
     { id: 'correo', label: 'Correo', actions: ['Lee avisos', 'Prepara resumen'] },
     { id: 'calendario', label: 'Calendario', actions: ['Lee plazos', 'Prepara aviso'] },
     { id: 'sedes', label: 'Sedes electrónicas', actions: ['Lee notificaciones', 'Pide confirmación'] },
-    { id: 'notificaciones', label: 'Notificaciones oficiales', actions: ['Lee y resume', 'Pide confirmación'] },
+    { id: 'notificaciones', label: 'Notificaciones', actions: ['Lee y resume', 'Pide confirmación'] },
     { id: 'certificado', label: 'Certificado digital', actions: ['Verifica identidad', 'Pide confirmación'] },
     { id: 'mensajeria', label: 'WhatsApp y Telegram', actions: ['Envía avisos', 'Prepara resumen'] },
   ],

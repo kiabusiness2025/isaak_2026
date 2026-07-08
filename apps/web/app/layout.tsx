@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Fraunces, Inter } from 'next/font/google';
+import { MotionConfig } from 'framer-motion';
 import { siteMeta } from '@isaak/content';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
@@ -81,9 +82,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }}
         />
-        <SiteHeader />
-        <main>{children}</main>
-        <SiteFooter />
+        <MotionConfig reducedMotion="user">
+          <SiteHeader />
+          <main>{children}</main>
+          <SiteFooter />
+        </MotionConfig>
       </body>
     </html>
   );
