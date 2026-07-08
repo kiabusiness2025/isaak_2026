@@ -19,7 +19,10 @@ export const brandAssets = {
       idle: '/robot/isaak-full-idle.png',
       thinking: '/robot/isaak-full-thinking.png',
       confirmed: '/robot/isaak-full-confirmed.png',
+      relaxed: '/robot/isaak-full-relaxed.png',
     },
+    // "relaxed" no tiene recorte de busto propio — IsaakCharacter usa bust.idle como
+    // fallback en variant="circle" (ver POSE_ASSET_FALLBACK en IsaakCharacter.tsx).
     bust: {
       idle: '/robot/isaak-bust-idle.png',
       thinking: '/robot/isaak-bust-thinking.png',
