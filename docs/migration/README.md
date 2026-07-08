@@ -1,18 +1,22 @@
 # docs/migration
 
 Fichas y auditorías del traspaso de módulos/producto desde el repo `isaak` (legacy) a
-este repo. Carpeta creada como parte del esqueleto de estructura — todavía sin contenido
-migrado.
+este repo.
 
-Fuente actual (repo `isaak`, Fase 0 del roadmap, hasta que se porte aquí):
+- `TRANSFER_PLAN_2026.md` — plan de traspaso completo: prioridades, qué NO migrar de
+  inicio, y las fases de ejecución.
+- `verified-files.md` — ficha de verificación obligatoria por archivo migrado (origen,
+  destino, qué hace, por qué se conserva, dependencias, test ejecutado, resultado de
+  build, riesgo, decisión). Nada entra a este repo sin pasar por aquí primero.
+- `current-state.md` — inventario completo de apps/packages del repo `isaak` (Fase 0,
+  copiado desde ese repo — fuente de verdad allí).
+- `reusable-modules.md` — qué se puede portar tal cual, qué con revisión, qué hay que
+  reescribir (grado de acoplamiento por módulo).
+- `deprecated-modules.md` — qué NO migrar y por qué (`apps/client`, discriminador `gcbd`,
+  dashboards duplicados, acoplamiento Holded-first en nombres de tipos, etc.).
+- `vercel-inventory.md` — mapeo de proyectos/dominios/crons de Vercel.
+- `env-inventory.md` — variables de entorno por app (solo nombres, sin valores).
 
-- `docs/migration/current-state.md` — inventario completo de apps/packages del repo legacy
-- `docs/migration/reusable-modules.md` — qué se puede portar tal cual, qué con revisión, qué
-  hay que reescribir (grado de acoplamiento por módulo)
-- `docs/migration/deprecated-modules.md` — qué NO migrar y por qué (`apps/client`, discriminador
-  `gcbd`, dashboards duplicados, acoplamiento Holded-first en nombres de tipos, etc.)
-- `docs/migration/vercel-inventory.md` — mapeo de proyectos/dominios/crons de Vercel
-- `docs/migration/env-inventory.md` — variables de entorno por app (solo nombres, sin valores)
-
-Regla heredada del roadmap: nada entra a este repo sin una ficha de migración explícita
-(origen, destino, riesgo, estado) — no copiar carpetas completas.
+Regla: nada entra a este repo sin una ficha en `verified-files.md` — no copiar carpetas
+completas, y **copiar, nunca mover** (el repo `isaak` sigue siendo la fuente productiva
+mientras dure el traspaso).
