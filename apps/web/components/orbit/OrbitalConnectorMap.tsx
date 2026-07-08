@@ -19,8 +19,12 @@ export function OrbitalConnectorMap() {
         {connectorCategories.map((category, index) => {
           const angle = (index / connectorCategories.length) * Math.PI * 2;
           const radius = 42;
-          const x = 50 + radius * Math.cos(angle);
-          const y = 50 + radius * Math.sin(angle);
+          // Fijado a 4 decimales: server y cliente pueden diferir en el último
+          // bit de Math.cos/sin, lo que rompía la hidratación con "29%" vs "28.999...%".
+          // Se mantiene como string (no Number) para que el valor final en el
+          // CSS sea exactamente el que fijamos, sin volver a serializar el float.
+          const x = (50 + radius * Math.cos(angle)).toFixed(4);
+          const y = (50 + radius * Math.sin(angle)).toFixed(4);
           const isActive = active.id === category.id;
 
           return (

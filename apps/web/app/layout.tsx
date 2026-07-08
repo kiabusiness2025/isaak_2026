@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Fraunces, Inter } from 'next/font/google';
 import { siteMeta } from '@isaak/content';
 import { SiteHeader } from '@/components/layout/SiteHeader';
@@ -24,6 +24,7 @@ export const metadata: Metadata = {
     template: '%s · Isaak',
   },
   description: siteMeta.description,
+  manifest: '/manifest.json',
   openGraph: {
     title: siteMeta.title,
     description: siteMeta.description,
@@ -38,6 +39,10 @@ export const metadata: Metadata = {
     title: siteMeta.title,
     description: siteMeta.description,
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#3D2A1F',
 };
 
 const organizationJsonLd = {

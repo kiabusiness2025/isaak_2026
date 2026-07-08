@@ -1,0 +1,21 @@
+{
+  "name": "Isaak",
+  "short_name": "Isaak",
+  "description": "Isaak habla con tus programas y entiende las sedes electrónicas.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F1E7",
+  "theme_color": "#3D2A1F",
+  "icons": [
+    {
+      "src": "/brand/isaak-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/brand/isaak-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

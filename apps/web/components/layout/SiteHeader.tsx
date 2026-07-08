@@ -1,7 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { brandAssets } from '@isaak/brand';
 import { IsaakButton } from '@/components/ui/IsaakButton';
 
 const NAV_LINKS = [
@@ -19,8 +21,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-camel/20 bg-cream/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="font-serif-display text-xl font-semibold text-chocolate">
-          Isaak
+        <Link href="/" className="flex items-center">
+          <Image src={brandAssets.wordmark.dark} alt="Isaak" width={120} height={33} priority />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
