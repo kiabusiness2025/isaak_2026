@@ -8,3 +8,4 @@ export * from './profesional';
 export * from './connectors';
 export * from './seo';
 export * from './copy-guardrails';
+export * from './contact-links';

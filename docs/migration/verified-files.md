@@ -86,6 +86,49 @@ build" con datos que no se han corrido de verdad.
 - Decisión: **descartar** — usar como referencia histórica si hace falta, no migrar.
 - PR: —
 
+### 3. `IsaakHeroTour.tsx` → `apps/web/components/demo/IsaakHeroTour.tsx`
+
+- Origen: `apps/isaak/app/components/IsaakHeroTour.tsx` (841 líneas)
+- Destino: `apps/web/components/demo/IsaakHeroTour.tsx`
+- Qué hace: tour animado de 8 escenarios (4 profesional + 4 personal) con datos de
+  ejemplo hardcodeados — mockup de navegador con chat + panel de "artifact" (gráficos
+  SVG, tarjetas de cálculo, descargas simuladas). Sin `fetch`, sin dependencias externas
+  más allá de React.
+- Por qué se conserva: único candidato de Fase 3 100% autocontenido y sin bloqueo de
+  producto (a diferencia de `IsaakOmniChatWidget`/`TalkChannels`, no depende de una ruta
+  de alta que todavía no existe).
+- Dependencias: ninguna — ni Prisma, ni fetch, ni rutas de otras apps.
+- Test ejecutado: `pnpm --filter @isaak/web typecheck`, `pnpm --filter @isaak/web lint`,
+  `pnpm --filter @isaak/web build` (los tres, tras portar).
+- Resultado de build: los tres comandos en verde; `/demo` y el resto de rutas estáticas
+  siguen generándose igual (26/26 páginas) — el componente no está aún importado en
+  ninguna página, así que no cambia ningún bundle todavía.
+- Riesgo: bajo — cambio es aditivo (archivo nuevo, nadie lo importa todavía).
+- Decisión: **migrar con adaptación** — repaletizado de los hex de marca legacy
+  (`#2361d8`→`isaak-blue`, `#011c67`→`chocolate`) a los tokens de `packages/brand`; el
+  dominio de ejemplo del mockup de navegador pasa de `isaak.app`/`app.isaak.app` a
+  `isaak.es`/`app.isaak.es`. Pendiente como paso siguiente (no parte de esta ficha):
+  decidir en qué página se usa y con qué copy alrededor.
+- PR: —
+
+### 4. `isaak-contact-links.ts` → `packages/content/src/contact-links.ts`
+
+- Origen: `apps/isaak/app/lib/isaak-contact-links.ts` (13 líneas)
+- Destino: `packages/content/src/contact-links.ts`
+- Qué hace: constantes de destino de WhatsApp/Telegram con override por variable de
+  entorno (`NEXT_PUBLIC_WHATSAPP_URL`/`NEXT_PUBLIC_TELEGRAM_URL`).
+- Por qué se conserva: es la dependencia compartida que necesitan `IsaakOmniChatWidget`
+  y `TalkChannels` (3.3/3.4b) cuando se desbloqueen; migrarla ahora evita que ambos
+  vuelvan a implementar el mismo dato por separado.
+- Dependencias: ninguna — módulo puro, sin Prisma ni fetch. Requirió añadir
+  `@types/node` como devDependency de `packages/content` (no estaba, y `process.env`
+  no tipaba sin él).
+- Test ejecutado: `pnpm --filter @isaak/content typecheck`.
+- Resultado de build: en verde tras añadir `@types/node`.
+- Riesgo: bajo — sin cambios de lógica respecto al origen.
+- Decisión: **migrar tal cual** (solo cambia la ruta del archivo, no el contenido).
+- PR: —
+
 ---
 
 _Añadir una entrada nueva por cada archivo/módulo antes de abrir el PR que lo introduce,
