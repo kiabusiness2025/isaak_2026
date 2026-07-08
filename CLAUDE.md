@@ -40,20 +40,33 @@ packages/
     src/{home,pricing,connectors,faq,personal,profesional,aeat-models,official-sites,seo,copy-guardrails}.ts
 ```
 
-### Esqueleto de traspaso (Fase 5+, sin contenido todavía)
+### Esqueleto de traspaso (ya construido, contenido llegando por fases)
 
 Estructura objetivo del traspaso completo desde `isaak` (legacy): `apps/{app,admin}` y
 `packages/{ui,config,auth,db,integrations,billing,analytics,testing}`, más
-`docs/{product,migration,architecture,marketing}` y `scripts/{audit,migrate,verify}`.
+`docs/{product,migration,architecture,marketing,engineering}` y
+`scripts/{audit,migrate,verify}`. El esqueleto (carpetas + `package.json`/`README.md` con
+scripts no-op) ya existe completo — lo que va llegando por fases es el **contenido real**
+de cada paquete, siguiendo `docs/migration/module-inventory.md` (checklist maestra por
+módulo, con estado `pendiente`/`auditado`/`migrado`/`descartado`) y
+`docs/migration/TRANSFER_PLAN_2026.md` (plan completo, Fase 0 a Fase 10).
 
-Todo eso existe hoy como **esqueleto vacío** — solo `package.json`/`README.md` con scripts
-no-op (para que `pnpm validate` siga en verde) o un `README.md` explicando la carpeta.
+**Aviso de nomenclatura:** las "Fases" de la sección "Estado" más abajo numeran las
+etapas de **construir `isaak_2026` desde cero** (repo limpio → marca → web pública → app
+autenticada). Son una escala distinta de las "Fases 0-10" de `TRANSFER_PLAN_2026.md`, que
+numeran las etapas del **traspaso de módulos** desde `isaak` legacy (billing, componentes
+demo, integraciones, auth, DB...). Al referirse a una fase de traspaso, decir siempre
+"Fase N del plan de traspaso" — nunca solo "Fase N" a secas, para no confundir ambas
+escalas.
+
 `pnpm-workspace.yaml`/`turbo.json` usan glob (`apps/*`, `packages/*`), así que no hace
 falta tocar configuración al ir llenando estos paquetes con código real.
 
-Antes de portar cualquier módulo real a uno de estos esqueletos, consultar en el repo
-`isaak`: `docs/migration/reusable-modules.md` (grado de acoplamiento por módulo — qué se
-porta tal cual, qué con revisión, qué hay que reescribir) y
+Antes de portar cualquier módulo real a uno de estos esqueletos, consultar
+`docs/migration/module-inventory.md` primero (ya cruza `reusable-modules.md` y
+`deprecated-modules.md` del repo `isaak` con destino y estado por módulo) y, si hace
+falta más detalle, los originales en el repo `isaak`: `docs/migration/
+reusable-modules.md` (grado de acoplamiento por módulo) y
 `docs/migration/deprecated-modules.md` (qué NO migrar: `apps/client`, el discriminador
 `gcbd`, los dashboards de admin duplicados, nombres de tipos `Holded*` en vez de
 `Connector*` genéricos en `packages/integrations`).
@@ -139,5 +152,16 @@ pnpm validate   # lint + typecheck + build
 - [x] Fase 2 — Marca Retro (`packages/brand`)
 - [x] Fase 3 — Web pública V1 (`apps/web`)
 - [x] Fase 3.5 — Personaje real (6 poses) + iconos de conectores
-- [ ] Fase 4 — Base de conocimiento oficial
-- [ ] Fase 5+ — App autenticada, billing, conectores reales, admin
+- [x] Fase 4 — Esqueleto completo de traspaso (`apps/{app,admin}`,
+      `packages/{ui,config,auth,db,integrations,billing,analytics,testing}`,
+      `docs/{product,migration,architecture,marketing,engineering}`, `scripts/*`)
+- [~] Fase 5+ — Traspaso de contenido real por fases, ver `docs/migration/
+      TRANSFER_PLAN_2026.md` y `docs/migration/module-inventory.md` para el estado
+      módulo a módulo. Auditoría completa del progreso diario en
+      `docs/engineering/sessions/`.
+
+Resumen del plan de traspaso a fecha 2026-07-08 (detalle en `module-inventory.md`):
+Fase 0-1 del plan de traspaso completas; Fase 2 (billing) auditada y **bloqueada** en un
+hallazgo de producto (modelo de cuota mensajes-vs-créditos, ver ficha #1 en
+`verified-files.md`); Fase 3 (componentes demo) con primer lote migrado; Fase 4-6
+(integraciones, auth, DB) sin empezar.
