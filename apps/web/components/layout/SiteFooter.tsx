@@ -1,4 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
+import { brandAssets } from '@isaak/brand';
 
 const COLUMNS = [
   {
@@ -37,7 +39,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 py-12">
         <div className="grid gap-10 md:grid-cols-4">
           <div>
-            <p className="font-serif-display text-lg font-semibold text-chocolate">Isaak</p>
+            <Image src={brandAssets.wordmark.dark} alt="Isaak" width={110} height={30} />
             <p className="mt-3 max-w-xs text-sm text-chocolate/70">
               Isaak habla con tus programas y entiende las sedes electrónicas. Tú solo hablas con
               Isaak.
