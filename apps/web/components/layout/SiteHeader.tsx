@@ -28,7 +28,7 @@ export function SiteHeader() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm text-chocolate/80 transition-colors hover:text-isaak-blue"
+              className="text-sm text-chocolate/80 transition-colors hover:text-copper"
             >
               {link.label}
             </Link>
@@ -36,7 +36,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <Link href="/demo" className="text-sm font-medium text-chocolate/80 hover:text-isaak-blue">
+          <Link href="/demo" className="text-sm font-medium text-chocolate/80 hover:text-copper">
             Ver demo
           </Link>
           <IsaakButton href="/precios" size="sm">
@@ -66,7 +66,7 @@ export function SiteHeader() {
             <Link
               key={link.href}
               href={link.href}
-              className="py-2 text-sm text-chocolate/80 hover:text-isaak-blue"
+              className="py-2 text-sm text-chocolate/80 hover:text-copper"
               onClick={() => setOpen(false)}
             >
               {link.label}
@@ -74,7 +74,7 @@ export function SiteHeader() {
           ))}
           <Link
             href="/demo"
-            className="py-2 text-sm font-medium text-chocolate hover:text-isaak-blue"
+            className="py-2 text-sm font-medium text-chocolate hover:text-copper"
             onClick={() => setOpen(false)}
           >
             Ver demo

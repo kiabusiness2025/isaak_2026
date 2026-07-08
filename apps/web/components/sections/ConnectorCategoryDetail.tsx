@@ -13,7 +13,7 @@ export function ConnectorCategoryDetail({ category }: ConnectorCategoryDetailPro
   return (
     <div className="py-20 sm:py-28">
       <div className="mx-auto max-w-4xl px-6">
-        <Link href="/conectores" className="text-sm text-isaak-blue hover:underline">
+        <Link href="/conectores" className="text-sm text-copper hover:underline">
           ← Todos los conectores
         </Link>
 

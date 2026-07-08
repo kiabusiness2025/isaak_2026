@@ -49,25 +49,25 @@ export default function ConectoresPage() {
           <div className="mt-14 flex flex-wrap justify-center gap-3">
             <Link
               href="/conectores/programas"
-              className="rounded-full border border-camel/30 bg-cream/70 px-5 py-2 text-sm text-chocolate hover:border-isaak-blue"
+              className="rounded-full border border-camel/30 bg-cream/70 px-5 py-2 text-sm text-chocolate hover:border-copper"
             >
               Programas y ERP
             </Link>
             <Link
               href="/conectores/bancos"
-              className="rounded-full border border-camel/30 bg-cream/70 px-5 py-2 text-sm text-chocolate hover:border-isaak-blue"
+              className="rounded-full border border-camel/30 bg-cream/70 px-5 py-2 text-sm text-chocolate hover:border-copper"
             >
               Bancos
             </Link>
             <Link
               href="/conectores/documentos"
-              className="rounded-full border border-camel/30 bg-cream/70 px-5 py-2 text-sm text-chocolate hover:border-isaak-blue"
+              className="rounded-full border border-camel/30 bg-cream/70 px-5 py-2 text-sm text-chocolate hover:border-copper"
             >
               Documentos
             </Link>
             <Link
               href="/conectores/sedes-electronicas"
-              className="rounded-full border border-camel/30 bg-cream/70 px-5 py-2 text-sm text-chocolate hover:border-isaak-blue"
+              className="rounded-full border border-camel/30 bg-cream/70 px-5 py-2 text-sm text-chocolate hover:border-copper"
             >
               Sedes electrónicas
             </Link>

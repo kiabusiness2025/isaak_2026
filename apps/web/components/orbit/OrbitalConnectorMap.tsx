@@ -9,7 +9,7 @@ export function OrbitalConnectorMap() {
 
   return (
     <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
-      <div className="relative mx-auto flex h-[380px] w-[380px] max-w-full items-center justify-center sm:h-[440px] sm:w-[440px]">
+      <div className="relative mx-auto flex h-[min(380px,85vw)] w-[min(380px,85vw)] items-center justify-center sm:h-[440px] sm:w-[440px]">
         <div className="absolute inset-0 animate-orbit-spin rounded-full border border-copper/20" />
         <div className="absolute inset-8 rounded-full border border-camel/20" />
         <div className="absolute flex h-16 w-16 items-center justify-center rounded-full bg-chocolate text-cream shadow-lift">

@@ -2,6 +2,7 @@ import { pricingPreview } from '@isaak/content';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { PricingTable } from '@/components/pricing/PricingTable';
+import { IsaakButton } from '@/components/ui/IsaakButton';
 
 export function PricingPreview() {
   return (
@@ -14,6 +15,14 @@ export function PricingPreview() {
         <ScrollReveal delay={0.15}>
           <div className="mt-12">
             <PricingTable />
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.2}>
+          <div className="mt-8 flex justify-center">
+            <IsaakButton href="/precios" variant="secondary">
+              Ver todos los precios
+            </IsaakButton>
           </div>
         </ScrollReveal>
       </div>

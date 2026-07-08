@@ -16,7 +16,7 @@ export function UseCasesSection() {
             <ScrollReveal key={column.id} delay={index * 0.1}>
               <Link
                 href={column.href}
-                className="block h-full rounded-3xl border border-camel/30 bg-cream/70 p-6 shadow-glass transition-colors hover:border-isaak-blue/50"
+                className="block h-full rounded-3xl border border-camel/30 bg-cream/70 p-6 shadow-glass transition-colors hover:border-copper/50"
               >
                 <p className="font-serif-display text-lg font-semibold leading-snug text-chocolate">
                   {column.title}
@@ -24,7 +24,7 @@ export function UseCasesSection() {
                 <ul className="mt-5 space-y-2.5 text-sm text-chocolate/70">
                   {column.questions.map((question) => (
                     <li key={question} className="flex gap-2">
-                      <span className="text-isaak-blue">→</span>
+                      <span className="text-copper">→</span>
                       {question}
                     </li>
                   ))}
