@@ -1,7 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { brandAssets } from '@isaak/brand';
 
 export type IsaakCharacterState = 'idle' | 'listening' | 'preparing' | 'connecting' | 'confirmed';
 
@@ -23,39 +25,16 @@ function usePrefersReducedMotion() {
 }
 
 /**
- * Personaje Isaak — placeholder elegante en SVG con microcomportamientos:
- * parpadeo cada 8-12s, luz que pulsa, inclinación al escuchar, movimiento
- * del libro al preparar, brillo cobre al conectar datos, sello al confirmar.
- * Sustituir el SVG por el asset ilustrado definitivo sin tocar la lógica de
- * estados: la silueta orbital + luz central deben mantenerse.
+ * Personaje Isaak — retrato ilustrado real (packages/brand/assets/robot),
+ * con microcomportamientos alrededor: inclinación al escuchar, brillo cobre
+ * al conectar datos, sello al confirmar. El parpadeo y el movimiento del
+ * libro de la versión SVG anterior no son portables a una foto estática;
+ * si se necesitan de vuelta, requieren una ilustración por capas (cara,
+ * ojos, libro) en vez de un único PNG plano.
  */
 export function IsaakCharacter({ size = 260, state = 'idle' }: IsaakCharacterProps) {
   const reducedMotion = usePrefersReducedMotion();
-  const [blinking, setBlinking] = useState(false);
-  const scheduleRef = useRef<ReturnType<typeof setTimeout>>();
-  const closeRef = useRef<ReturnType<typeof setTimeout>>();
-
-  useEffect(() => {
-    if (reducedMotion) return undefined;
-
-    function scheduleBlink() {
-      const delay = 8000 + Math.random() * 4000;
-      scheduleRef.current = setTimeout(() => {
-        setBlinking(true);
-        closeRef.current = setTimeout(() => setBlinking(false), 140);
-        scheduleBlink();
-      }, delay);
-    }
-
-    scheduleBlink();
-    return () => {
-      clearTimeout(scheduleRef.current);
-      clearTimeout(closeRef.current);
-    };
-  }, [reducedMotion]);
-
   const headTilt = state === 'listening' ? -6 : 0;
-  const bookLift = state === 'preparing' ? -3 : 0;
   const isConnecting = state === 'connecting';
   const isConfirmed = state === 'confirmed';
 
@@ -86,62 +65,20 @@ export function IsaakCharacter({ size = 260, state = 'idle' }: IsaakCharacterPro
         transition={{ duration: 9, repeat: reducedMotion ? 0 : Infinity, ease: 'easeInOut' }}
         className="relative h-full w-full"
       >
-        <motion.svg
-          viewBox="0 0 200 200"
-          className="h-full w-full drop-shadow-[0_20px_40px_rgba(61,42,31,0.18)]"
+        <motion.div
+          className="h-full w-full overflow-hidden rounded-full border-4 border-copper/40 shadow-[0_20px_40px_rgba(61,42,31,0.18)]"
           animate={{ rotate: headTilt }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          style={{ transformOrigin: '100px 60px' }}
         >
-          {/* Cuerpo */}
-          <rect x="55" y="80" width="90" height="90" rx="24" fill="#3D2A1F" />
-          <rect x="65" y="90" width="70" height="70" rx="18" fill="#F7F1E7" opacity="0.08" />
-
-          {/* Cabeza */}
-          <rect x="62" y="30" width="76" height="60" rx="20" fill="#3D2A1F" />
-          <rect x="72" y="42" width="56" height="30" rx="12" fill="#F7F1E7" opacity="0.1" />
-
-          {/* Ojo / luz central — pulso calmado; parpadeo real via scaleY */}
-          <motion.circle
-            cx="100"
-            cy="57"
-            r="10"
-            fill="#2F5E9E"
-            animate={{
-              opacity: isConfirmed ? 0.95 : [0.6, 1, 0.6],
-              scaleY: blinking ? 0.12 : 1,
-            }}
-            transition={{
-              opacity: isConfirmed
-                ? { duration: 0.6 }
-                : { duration: 3.4, repeat: Infinity, ease: 'easeInOut' },
-              scaleY: { duration: 0.14, ease: 'easeInOut' },
-            }}
-            style={{ transformOrigin: '100px 57px' }}
+          <Image
+            src={brandAssets.robot.main}
+            alt="Isaak"
+            width={size}
+            height={size}
+            className="h-full w-full object-cover"
+            priority
           />
-
-          {/* Antena / órbita */}
-          <circle cx="100" cy="14" r="4" fill="#B87333" />
-          <line x1="100" y1="18" x2="100" y2="30" stroke="#B87333" strokeWidth="2" />
-
-          {/* Brazos */}
-          <rect x="38" y="95" width="16" height="46" rx="8" fill="#3D2A1F" />
-          <rect x="146" y="95" width="16" height="46" rx="8" fill="#3D2A1F" />
-
-          {/* Libro / panel — leve movimiento al preparar respuesta */}
-          <motion.g
-            animate={{ y: bookLift }}
-            transition={{
-              duration: 1.6,
-              repeat: state === 'preparing' ? Infinity : 0,
-              repeatType: 'reverse',
-              ease: 'easeInOut',
-            }}
-          >
-            <rect x="72" y="128" width="56" height="34" rx="6" fill="#C89B61" />
-            <line x1="100" y1="128" x2="100" y2="162" stroke="#3D2A1F" strokeWidth="1.5" />
-          </motion.g>
-        </motion.svg>
+        </motion.div>
       </motion.div>
 
       {/* Sello de confirmación */}

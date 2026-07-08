@@ -4,6 +4,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { IsaakButton } from '@/components/ui/IsaakButton';
+import { ConnectorIcon } from '@/components/connectors/ConnectorIcon';
 
 type ConnectorCategoryDetailProps = {
   category: ConnectorCategory;
@@ -19,12 +20,17 @@ export function ConnectorCategoryDetail({ category }: ConnectorCategoryDetailPro
 
         <ScrollReveal>
           <div className="mt-6">
-            <SectionHeading
-              eyebrow="Conectores"
-              title={category.label}
-              body={category.description}
-              align="left"
-            />
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-beige/60 text-copper">
+              <ConnectorIcon categoryId={category.id} className="h-6 w-6" />
+            </div>
+            <div className="mt-4">
+              <SectionHeading
+                eyebrow="Conectores"
+                title={category.label}
+                body={category.description}
+                align="left"
+              />
+            </div>
           </div>
         </ScrollReveal>
 

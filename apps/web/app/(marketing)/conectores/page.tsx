@@ -4,6 +4,7 @@ import { connectorCategories } from '@isaak/content';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { GlassCard } from '@/components/ui/GlassCard';
+import { ConnectorIcon } from '@/components/connectors/ConnectorIcon';
 
 export const metadata: Metadata = {
   title: 'Conectores — Isaak',
@@ -26,7 +27,10 @@ export default function ConectoresPage() {
           {connectorCategories.map((category, index) => (
             <ScrollReveal key={category.id} delay={index * 0.05}>
               <GlassCard className="h-full">
-                <p className="font-serif-display text-lg font-semibold text-chocolate">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-beige/60 text-copper">
+                  <ConnectorIcon categoryId={category.id} className="h-5 w-5" />
+                </div>
+                <p className="mt-3 font-serif-display text-lg font-semibold text-chocolate">
                   {category.label}
                 </p>
                 <p className="mt-2 text-sm text-chocolate/70">{category.description}</p>
