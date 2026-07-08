@@ -45,6 +45,12 @@ conflictos de producto reales, no solo de forma:
    que añade sedes/DEHú/certificado. Además existe ahora un **"Personal Total"** que no
    tiene ningún equivalente en legacy.
 
+**Dato adicional para esta decisión**: `docs/product/VIABILITY_STUDY_COSTES_2026.md` §8
+cuantifica con precios reales de Anthropic por qué el modelo de créditos ponderados se
+alinea mejor con el coste real de IA que el de mensajes 1:1 — no decide la pregunta de
+negocio por sí solo, pero es un argumento de sostenibilidad de costes a favor de mantener
+el modelo de créditos ya publicado.
+
 **Consecuencia:** no se puede portar el catálogo de valores de `isaak-entitlements.ts` —
 ni siquiera adaptado — sin antes decidir explícitamente: (a) si el nuevo modelo de
 negocio es "créditos ponderados" en vez de "mensajes 1:1" (impacta backend de cuota, no
