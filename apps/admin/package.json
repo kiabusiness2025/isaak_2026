@@ -1,0 +1,11 @@
+{
+  "name": "@isaak/admin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'apps/admin: pendiente de Fase 5+ — ver apps/admin/README.md'",
+    "build": "echo 'apps/admin: pendiente de Fase 5+'",
+    "lint": "echo 'apps/admin: pendiente de Fase 5+'",
+    "typecheck": "echo 'apps/admin: pendiente de Fase 5+'"
+  }
+}

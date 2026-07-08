@@ -1,0 +1,11 @@
+{
+  "name": "@isaak/app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'apps/app: pendiente de Fase 5+ — ver apps/app/README.md'",
+    "build": "echo 'apps/app: pendiente de Fase 5+'",
+    "lint": "echo 'apps/app: pendiente de Fase 5+'",
+    "typecheck": "echo 'apps/app: pendiente de Fase 5+'"
+  }
+}

@@ -91,4 +91,11 @@ export const officialSites: OfficialSite[] = [
     prepares: 'Resumen de obligaciones municipales.',
     requiresConfirmation: 'Pago o alegación ante el ayuntamiento.',
   },
+  {
+    id: 'circe',
+    name: 'CIRCE',
+    understands: 'Trámites de constitución de empresa y Documento Único Electrónico (DUE).',
+    prepares: 'Estado del expediente de constitución y próximos pasos del DUE.',
+    requiresConfirmation: 'Envío o firma de trámites de constitución ante CIRCE.',
+  },
 ];
