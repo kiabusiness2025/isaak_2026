@@ -58,13 +58,13 @@ export function RetroHeroScene() {
 
         <div className="relative flex min-h-[420px] items-center justify-center lg:min-h-[560px]">
           <OrbitalLines />
-          <FloatingCards />
-          <div className="relative z-10 flex flex-col items-center gap-6">
-            <IsaakCharacter state={characterState} />
+          <div className="relative z-0 flex flex-col items-center gap-6">
+            <IsaakCharacter state={characterState} variant="full" size={340} />
             <div className="w-full max-w-[22rem] lg:max-w-xs lg:translate-x-8">
               <EntrepreneurScenario />
             </div>
           </div>
+          <FloatingCards />
         </div>
       </div>
     </section>

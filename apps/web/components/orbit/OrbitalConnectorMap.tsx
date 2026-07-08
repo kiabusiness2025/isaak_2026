@@ -1,8 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useState } from 'react';
+import { brandAssets } from '@isaak/brand';
 import { connectorCategories, type ConnectorCategory } from '@isaak/content';
+import { ConnectorIcon } from '@/components/connectors/ConnectorIcon';
 
 export function OrbitalConnectorMap() {
   const [active, setActive] = useState<ConnectorCategory>(connectorCategories[0]!);
@@ -12,8 +15,14 @@ export function OrbitalConnectorMap() {
       <div className="relative mx-auto flex h-[min(380px,85vw)] w-[min(380px,85vw)] items-center justify-center sm:h-[440px] sm:w-[440px]">
         <div className="absolute inset-0 animate-orbit-spin rounded-full border border-copper/20" />
         <div className="absolute inset-8 rounded-full border border-camel/20" />
-        <div className="absolute flex h-16 w-16 items-center justify-center rounded-full bg-chocolate text-cream shadow-lift">
-          <span className="font-serif-display text-sm">Isaak</span>
+        <div className="absolute h-16 w-16 overflow-hidden rounded-full border-2 border-copper/40 shadow-lift">
+          <Image
+            src={brandAssets.robot.bust.idle}
+            alt="Isaak"
+            width={64}
+            height={64}
+            className="h-full w-full object-cover"
+          />
         </div>
 
         {connectorCategories.map((category, index) => {
@@ -38,12 +47,13 @@ export function OrbitalConnectorMap() {
               whileHover={{ scale: 1.08 }}
             >
               <span
-                className={`block max-w-[6.5rem] rounded-full border px-3 py-1.5 text-center text-[11px] font-medium leading-tight shadow-glass transition-colors ${
+                className={`flex max-w-[6.5rem] flex-col items-center gap-1 rounded-full border px-3 py-1.5 text-center text-[11px] font-medium leading-tight shadow-glass transition-colors ${
                   isActive
                     ? 'border-isaak-blue bg-isaak-blue text-cream'
                     : 'border-camel/40 bg-cream text-chocolate'
                 }`}
               >
+                <ConnectorIcon categoryId={category.id} className="h-4 w-4" />
                 {category.label}
               </span>
             </motion.button>
@@ -58,7 +68,8 @@ export function OrbitalConnectorMap() {
         transition={{ duration: 0.35 }}
         className="rounded-2xl border border-camel/30 bg-cream/70 p-6 shadow-glass"
       >
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-copper">
+        <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-copper">
+          <ConnectorIcon categoryId={active.id} className="h-4 w-4" />
           {active.label}
         </p>
         <p className="mt-3 text-base text-chocolate/80">{active.description}</p>

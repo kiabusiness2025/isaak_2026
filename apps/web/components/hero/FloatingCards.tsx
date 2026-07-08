@@ -4,20 +4,28 @@ import { motion } from 'framer-motion';
 import { hero } from '@isaak/content';
 
 const POSITIONS = [
-  'left-[2%] top-[8%]',
-  'right-[4%] top-[4%]',
-  'left-[0%] top-[46%]',
-  'right-[0%] top-[42%]',
-  'left-[10%] bottom-[4%]',
-  'right-[12%] bottom-[2%]',
-  'left-[32%] top-[0%]',
-  'right-[30%] bottom-[10%]',
+  'left-[0%] top-[10%]',
+  'right-[0%] top-[6%]',
+  'left-[0%] top-[48%]',
+  'right-[0%] top-[44%]',
+  'left-[6%] bottom-[2%]',
+  'left-[14%] top-[0%]',
 ];
 
+/**
+ * Solo estas 6 tarjetas (de las 8 en @isaak/content) tienen hueco propio en la
+ * constelación de escritorio sin invadir ni al personaje ni al panel de chat
+ * inferior (EntrepreneurScenario). El resto ('cliente', 'seg-social') se queda
+ * fuera del desktop; tampoco aparece en la tira móvil (que ya usa solo las 5 primeras).
+ */
+const DESKTOP_CARD_IDS = ['factura', 'banco', 'modelo-303', 'notificacion-aeat', 'calendario', 'documento'];
+
 export function FloatingCards() {
+  const cards = hero.floatingCards.filter((card) => DESKTOP_CARD_IDS.includes(card.id));
+
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden lg:block">
-      {hero.floatingCards.map((card, index) => (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-20 hidden lg:block">
+      {cards.map((card, index) => (
         <motion.div
           key={card.id}
           className={`pointer-events-auto absolute ${POSITIONS[index % POSITIONS.length]} w-48`}
