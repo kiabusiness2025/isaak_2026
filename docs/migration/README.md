@@ -5,6 +5,10 @@ este repo.
 
 - `TRANSFER_PLAN_2026.md` — plan de traspaso completo: prioridades, qué NO migrar de
   inicio, y las fases de ejecución.
+- `module-inventory.md` — checklist maestra por módulo (origen, destino, fase, estado:
+  pendiente/auditado/migrado/descartado), consolidando `reusable-modules.md` +
+  `deprecated-modules.md` en orden de ejecución. Punto de partida para cada PR de
+  traspaso — actualizar el estado de la fila al abrir/cerrar cada uno.
 - `verified-files.md` — ficha de verificación obligatoria por archivo migrado (origen,
   destino, qué hace, por qué se conserva, dependencias, test ejecutado, resultado de
   build, riesgo, decisión). Nada entra a este repo sin pasar por aquí primero.

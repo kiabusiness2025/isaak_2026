@@ -218,6 +218,12 @@ integrations/billing/analytics/testing`). No se añaden esqueletos para estos tr
 
 ## 7. Próximo paso concreto
 
-Fase 2, paso 1: auditar `isaak-entitlements.ts` línea a línea contra
-`packages/content/src/pricing.ts` y decidir qué tipos/estructuras se portan. Es el primer
-elemento de la tabla de prioridades después de brand/estructura (ya completos).
+Fase 2, paso 1 ✅ **auditado** (2026-07-08): comparación línea a línea de
+`isaak-entitlements.ts` contra `packages/content/src/pricing.ts` completada — ver
+`docs/migration/module-inventory.md` §Fase 2 y ficha #1 en `verified-files.md`. Portar
+los **tipos** (`PlanTier`/`Feature`/`QuotaPolicy`) a `packages/billing` ya es seguro.
+Portar el **catálogo de valores** está **bloqueado** hasta que el usuario confirme
+explícitamente: (a) si el modelo de cuota pasa de mensajes 1:1 a créditos ponderados, y
+(b) el precio final de "Profesional Total"/"Personal Total" (hoy "Por definir" en
+`pricing.ts`). Ver `docs/migration/module-inventory.md` para el resto de módulos en orden
+(Fase 3 componentes demo, Fase 4 integraciones, Fase 5 auth, Fase 6 DB).
