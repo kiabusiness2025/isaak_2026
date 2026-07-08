@@ -24,3 +24,6 @@ este repo.
 Regla: nada entra a este repo sin una ficha en `verified-files.md` — no copiar carpetas
 completas, y **copiar, nunca mover** (el repo `isaak` sigue siendo la fuente productiva
 mientras dure el traspaso).
+
+Bitácora de progreso día a día (qué se auditó/migró, hallazgos, gaps encontrados): ver
+`docs/engineering/sessions/`.

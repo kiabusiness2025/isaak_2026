@@ -30,9 +30,11 @@ packages/
   testing/       Utilidades de test compartidas — esqueleto vacío, pendiente Fase 5+
 docs/
   product/       Roadmap, pricing, especificaciones — pendiente de portar desde isaak
-  migration/     Fichas y auditorías de traspaso — pendiente de portar desde isaak
+  migration/     Plan de traspaso, inventario de módulos y fichas de verificación —
+                 activo (TRANSFER_PLAN_2026.md, module-inventory.md, verified-files.md)
   architecture/  Decisiones de arquitectura propias de isaak_2026 — carpeta nueva
   marketing/     Guías operativas (ej. HeyGen) — pendiente de portar desde isaak
+  engineering/   Bitácora de sesiones/auditorías de progreso — carpeta nueva
 scripts/
   audit/         Auditorías del repo — por crear
   migrate/       Migración de datos/módulos desde isaak — por crear
@@ -93,5 +95,11 @@ pnpm validate   # lint + typecheck + build
 - [x] Fase 2 — Marca Retro (`packages/brand`)
 - [x] Fase 3 — Web pública V1 (`apps/web`)
 - [x] Fase 3.5 — Personaje real (6 poses) + iconos de conectores
-- [ ] Fase 4 — Base de conocimiento oficial
-- [ ] Fase 5+ — App autenticada, billing, conectores, admin
+- [x] Fase 4 — Esqueleto completo de traspaso (apps/packages/docs/scripts)
+- [~] Fase 5+ — Traspaso de contenido real, en marcha por fases — ver
+      `docs/migration/module-inventory.md` para el estado módulo a módulo y
+      `docs/engineering/sessions/` para la bitácora de progreso día a día
+
+(Nota: estas "Fases" numeran la construcción de `isaak_2026` desde cero, no las Fases 0-10
+del plan de traspaso en `docs/migration/TRANSFER_PLAN_2026.md` — ver aviso de
+nomenclatura en `CLAUDE.md`.)
