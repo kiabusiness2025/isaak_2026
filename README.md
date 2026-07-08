@@ -16,9 +16,12 @@ Este repo nace deliberadamente vacío de deuda histórica. Es el destino de la m
 apps/
   web/           Web pública Next.js App Router — V1 estática
 packages/
-  brand/         Tokens visuales (colores, tipografía, motion)
+  brand/         Tokens visuales (colores, tipografía, motion) + assets del personaje Isaak
   content/       Copy versionado (home, pricing, FAQ, conectores, sedes, modelos AEAT)
 ```
+
+Ver `CLAUDE.md` para el desglose completo de `apps/web/components/`, el sistema de
+poses del personaje Isaak, y las convenciones del proyecto.
 
 ## Reglas de migración
 
@@ -44,5 +47,6 @@ pnpm validate   # lint + typecheck + build
 - [x] Fase 1 — Repo limpio + tooling
 - [x] Fase 2 — Marca Retro (`packages/brand`)
 - [x] Fase 3 — Web pública V1 (`apps/web`)
+- [x] Fase 3.5 — Personaje real (6 poses) + iconos de conectores
 - [ ] Fase 4 — Base de conocimiento oficial
 - [ ] Fase 5+ — App autenticada, billing, conectores, admin
