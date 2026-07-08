@@ -14,11 +14,36 @@ Este repo nace deliberadamente vacío de deuda histórica. Es el destino de la m
 
 ```text
 apps/
-  web/           Web pública Next.js App Router — V1 estática
+  web/           Web pública Next.js App Router — V1 estática (única app real hoy)
+  app/           Producto autenticado — esqueleto vacío, pendiente Fase 5+
+  admin/         Backoffice — esqueleto vacío, pendiente Fase 5+
 packages/
   brand/         Tokens visuales (colores, tipografía, motion) + assets del personaje Isaak
   content/       Copy versionado (home, pricing, FAQ, conectores, sedes, modelos AEAT)
+  ui/            Componentes de UI compartidos — esqueleto vacío, pendiente Fase 5+
+  config/        Config compartida (ESLint/TS) — esqueleto vacío, pendiente Fase 5+
+  auth/          Autenticación — esqueleto vacío, pendiente Fase 5+
+  db/            Cliente de datos (Prisma) — esqueleto vacío, pendiente Fase 5+
+  integrations/  Clientes de conectores — esqueleto vacío, pendiente Fase 5+
+  billing/       Planes, cuotas, Stripe — esqueleto vacío, pendiente Fase 5+
+  analytics/     Telemetría de producto — esqueleto vacío, pendiente Fase 5+
+  testing/       Utilidades de test compartidas — esqueleto vacío, pendiente Fase 5+
+docs/
+  product/       Roadmap, pricing, especificaciones — pendiente de portar desde isaak
+  migration/     Fichas y auditorías de traspaso — pendiente de portar desde isaak
+  architecture/  Decisiones de arquitectura propias de isaak_2026 — carpeta nueva
+  marketing/     Guías operativas (ej. HeyGen) — pendiente de portar desde isaak
+scripts/
+  audit/         Auditorías del repo — por crear
+  migrate/       Migración de datos/módulos desde isaak — por crear
+  verify/        Verificación post-migración — por crear
 ```
+
+Los paquetes/apps marcados "esqueleto vacío" solo tienen `package.json` + `README.md` —
+sus scripts son no-ops para no romper `pnpm validate`, y no tienen código migrado todavía.
+Antes de portar contenido real a cualquiera de ellos, revisar
+`docs/migration/reusable-modules.md` y `docs/migration/deprecated-modules.md` en el repo
+`isaak` (grado de acoplamiento por módulo, qué NO migrar).
 
 Ver `CLAUDE.md` para el desglose completo de `apps/web/components/`, el sistema de
 poses del personaje Isaak, y las convenciones del proyecto.

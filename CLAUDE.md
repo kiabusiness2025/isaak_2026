@@ -40,6 +40,24 @@ packages/
     src/{home,pricing,connectors,faq,personal,profesional,aeat-models,official-sites,seo,copy-guardrails}.ts
 ```
 
+### Esqueleto de traspaso (Fase 5+, sin contenido todavía)
+
+Estructura objetivo del traspaso completo desde `isaak` (legacy): `apps/{app,admin}` y
+`packages/{ui,config,auth,db,integrations,billing,analytics,testing}`, más
+`docs/{product,migration,architecture,marketing}` y `scripts/{audit,migrate,verify}`.
+
+Todo eso existe hoy como **esqueleto vacío** — solo `package.json`/`README.md` con scripts
+no-op (para que `pnpm validate` siga en verde) o un `README.md` explicando la carpeta.
+`pnpm-workspace.yaml`/`turbo.json` usan glob (`apps/*`, `packages/*`), así que no hace
+falta tocar configuración al ir llenando estos paquetes con código real.
+
+Antes de portar cualquier módulo real a uno de estos esqueletos, consultar en el repo
+`isaak`: `docs/migration/reusable-modules.md` (grado de acoplamiento por módulo — qué se
+porta tal cual, qué con revisión, qué hay que reescribir) y
+`docs/migration/deprecated-modules.md` (qué NO migrar: `apps/client`, el discriminador
+`gcbd`, los dashboards de admin duplicados, nombres de tipos `Holded*` en vez de
+`Connector*` genéricos en `packages/integrations`).
+
 ## Personaje Isaak — sistema de poses
 
 `IsaakCharacter` (`apps/web/components/hero/IsaakCharacter.tsx`) NO es un dibujo único:
