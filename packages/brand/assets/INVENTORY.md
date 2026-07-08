@@ -48,7 +48,7 @@ programáticamente (Pillow) a partir del isotipo, no una copia 1:1 de estos arch
 | `isaak-bust-confirmed.png`                    | **approved** | Busto con libro — avatar circular, estado confirmed                                        |
 | `isaak-character-pointing-candidate.png`      | candidate    | Cuerpo entero, señalando/apuntando — reservado para onboarding/tour guiado, sin componente aún |
 | `isaak-character-daily-admin-candidate.png`   | candidate    | Cuerpo entero, con móvil y portapapeles — reservado para sección "gestión diaria"/demo      |
-| `isaak-character-shrug-candidate.png`         | candidate    | Cuerpo entero, brazos abiertos/encogido de hombros — reservado para estado vacío "todo en orden" |
+| `isaak-full-relaxed.png`                      | **approved** | Cuerpo entero, brazos abiertos/encogido de hombros — hero, `state="relaxed"`, `variant="full"` |
 
 Las 6 poses `approved` están servidas en `apps/web/public/robot/` y mapeadas en
 `packages/brand/src/assets.ts` (`brandAssets.robot.{full,bust}.{idle,thinking,confirmed}`).

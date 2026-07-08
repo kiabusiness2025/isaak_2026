@@ -5,7 +5,13 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { brandAssets } from '@isaak/brand';
 
-export type IsaakCharacterState = 'idle' | 'listening' | 'preparing' | 'connecting' | 'confirmed';
+export type IsaakCharacterState =
+  | 'idle'
+  | 'listening'
+  | 'preparing'
+  | 'connecting'
+  | 'confirmed'
+  | 'relaxed';
 
 type IsaakCharacterProps = {
   size?: number;
@@ -14,7 +20,7 @@ type IsaakCharacterProps = {
   variant?: 'circle' | 'full';
 };
 
-type Pose = 'idle' | 'thinking' | 'confirmed';
+type Pose = 'idle' | 'thinking' | 'confirmed' | 'relaxed';
 
 const POSE_BY_STATE: Record<IsaakCharacterState, Pose> = {
   idle: 'idle',
@@ -22,6 +28,17 @@ const POSE_BY_STATE: Record<IsaakCharacterState, Pose> = {
   preparing: 'thinking',
   connecting: 'thinking',
   confirmed: 'confirmed',
+  relaxed: 'relaxed',
+};
+
+// "relaxed" (brazos abiertos, "todo en orden") solo existe en cuerpo entero — en
+// variant="circle" no hay un recorte de busto propio, así que cae de nuevo al
+// retrato idle en vez de romper.
+const BUST_POSE_FALLBACK: Record<Pose, 'idle' | 'thinking' | 'confirmed'> = {
+  idle: 'idle',
+  thinking: 'thinking',
+  confirmed: 'confirmed',
+  relaxed: 'idle',
 };
 
 function usePrefersReducedMotion() {
@@ -36,12 +53,28 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
+/** Ojo que parpadea sobre el retrato — solo calibrado para el recorte isaak-bust-idle. */
+function BlinkingEye({ left, reducedMotion }: { left: string; reducedMotion: boolean }) {
+  if (reducedMotion) return null;
+  return (
+    <motion.div
+      aria-hidden="true"
+      className="absolute rounded-[50%] bg-[#f6e3cb]"
+      style={{ left, top: '41%', width: '13%', height: '8%', transformOrigin: 'center' }}
+      animate={{ scaleY: [0, 0, 1, 0, 0] }}
+      transition={{ duration: 9, times: [0, 0.93, 0.96, 0.99, 1], repeat: Infinity, ease: 'easeInOut' }}
+    />
+  );
+}
+
 /**
  * Personaje Isaak — retratos ilustrados reales (packages/brand/assets/robot),
- * uno por gesto (idle, pensando, confirmado) y por formato (busto circular /
- * cuerpo entero). El estado anima un crossfade entre esas poses reales en vez
- * de rotar o mover el marco del avatar, para que lo que se mueva sea Isaak,
- * no el círculo que lo contiene.
+ * uno por gesto (idle, pensando, confirmado, relajado) y por formato (busto
+ * circular / cuerpo entero). El estado anima un crossfade entre esas poses
+ * reales en vez de rotar o mover el marco del avatar, para que lo que se
+ * mueva sea Isaak, no el círculo que lo contiene. En el retrato circular,
+ * un parpadeo sutil (cada ~9s, apagado con prefers-reduced-motion) añade
+ * expresión facial sin necesitar una ilustración por capas.
  */
 export function IsaakCharacter({ size = 260, state = 'idle', variant = 'circle' }: IsaakCharacterProps) {
   const reducedMotion = usePrefersReducedMotion();
@@ -49,8 +82,10 @@ export function IsaakCharacter({ size = 260, state = 'idle', variant = 'circle' 
   const headTilt = state === 'listening' ? -4 : 0;
   const isConnecting = state === 'connecting';
   const isConfirmed = state === 'confirmed';
+  const showBlink = variant === 'circle' && pose === 'idle';
 
-  const src = variant === 'full' ? brandAssets.robot.full[pose] : brandAssets.robot.bust[pose];
+  const src =
+    variant === 'full' ? brandAssets.robot.full[pose] : brandAssets.robot.bust[BUST_POSE_FALLBACK[pose]];
   const aspect = variant === 'full' ? 760 / 1000 : 1;
   const width = variant === 'full' ? Math.round(size * aspect) : size;
   const height = size;
@@ -106,6 +141,13 @@ export function IsaakCharacter({ size = 260, state = 'idle', variant = 'circle' 
             />
           </motion.div>
         </AnimatePresence>
+
+        {showBlink && (
+          <>
+            <BlinkingEye left="32%" reducedMotion={reducedMotion} />
+            <BlinkingEye left="55%" reducedMotion={reducedMotion} />
+          </>
+        )}
       </motion.div>
 
       {/* Sello de confirmación */}

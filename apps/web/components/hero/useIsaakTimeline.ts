@@ -11,6 +11,7 @@ const DEFAULT_SEQUENCE: Step[] = [
   { state: 'preparing', duration: 2000 },
   { state: 'connecting', duration: 1300 },
   { state: 'confirmed', duration: 2600 },
+  { state: 'relaxed', duration: 2200 },
 ];
 
 /**
