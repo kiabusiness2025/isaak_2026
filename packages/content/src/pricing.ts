@@ -56,7 +56,7 @@ export const plans: Plan[] = [
   {
     id: 'chat',
     tab: 'personal',
-    name: 'Chat',
+    name: 'Isaak Chat',
     status: 'activo',
     tagline: 'Pregunta y entiende.',
     monthlyPrice: 0,
@@ -75,7 +75,7 @@ export const plans: Plan[] = [
   {
     id: 'personal',
     tab: 'personal',
-    name: 'Personal',
+    name: 'Isaak Basic',
     status: 'activo',
     tagline: 'Documentos, avisos y trámites personales.',
     monthlyPrice: 15,
@@ -97,12 +97,12 @@ export const plans: Plan[] = [
   {
     id: 'personal-total',
     tab: 'personal',
-    name: 'Personal Total',
+    name: 'Isaak Plus',
     status: 'proximamente',
     tagline: 'Sedes, notificaciones y documentos legales personales.',
-    monthlyPrice: null,
-    annualPrice: null,
-    aiCreditsPerMonth: 'Por definir',
+    monthlyPrice: 24,
+    annualPrice: 240,
+    aiCreditsPerMonth: '1.000 / mes',
     usersIncluded: '1',
     companiesIncluded: 'No',
     featuresIncluded: [
@@ -119,7 +119,7 @@ export const plans: Plan[] = [
   {
     id: 'profesional',
     tab: 'profesional',
-    name: 'Profesional',
+    name: 'Isaak Pro',
     status: 'activo',
     tagline: 'Empresa, bancos, documentos, impuestos y facturas VeriFactu.',
     monthlyPrice: 29,
@@ -139,13 +139,13 @@ export const plans: Plan[] = [
       'Calendario fiscal profesional',
     ],
     featuresExcluded: ['Sedes electrónicas', 'DEHú', 'Certificado digital'],
-    cta: 'Probar Profesional',
+    cta: 'Probar Isaak Pro',
     recommended: true,
   },
   {
     id: 'profesional-avanzado',
     tab: 'profesional',
-    name: 'Profesional Avanzado',
+    name: 'Isaak Pro Basic',
     status: 'activo',
     tagline: 'Más volumen, más usuarios, más empresas y más facturas VeriFactu.',
     monthlyPrice: 49,
@@ -161,17 +161,17 @@ export const plans: Plan[] = [
       'Confirmación reforzada avanzada',
     ],
     featuresExcluded: ['Sedes electrónicas', 'DEHú', 'Certificado digital'],
-    cta: 'Probar Profesional Avanzado',
+    cta: 'Probar Isaak Pro Basic',
   },
   {
     id: 'profesional-total',
     tab: 'profesional',
-    name: 'Profesional Total',
+    name: 'Isaak Pro Plus',
     status: 'proximamente',
     tagline: 'Sedes electrónicas, DEHú, certificado y presentación guiada.',
-    monthlyPrice: null,
-    annualPrice: null,
-    aiCreditsPerMonth: 'Por definir',
+    monthlyPrice: 79,
+    annualPrice: 790,
+    aiCreditsPerMonth: '4.000 / mes',
     usersIncluded: 'Por definir',
     companiesIncluded: 'Por definir',
     featuresIncluded: [
@@ -256,10 +256,10 @@ export type ComparisonTable = {
 export const comparisonTables: ComparisonTable[] = [
   {
     tab: 'personal',
-    planNames: ['Chat', 'Personal', 'Personal Total'],
+    planNames: ['Isaak Chat', 'Isaak Basic', 'Isaak Plus'],
     rows: [
-      { label: 'Precio mensual', values: ['0 €', '15 € + IVA', 'Por definir'] },
-      { label: 'Créditos IA / mes', values: ['100', '500', 'Por definir'] },
+      { label: 'Precio mensual', values: ['0 €', '15 € + IVA', '24 € + IVA'] },
+      { label: 'Créditos IA / mes', values: ['100', '500', '1.000'] },
       { label: 'Chat fiscal y administrativo', values: ['Sí', 'Sí', 'Sí'] },
       { label: 'Orientación renta / IRPF', values: ['Básica', 'Sí', 'Sí'] },
       { label: 'Revisión de documentos', values: ['No', 'Sí', 'Sí'] },
@@ -273,12 +273,12 @@ export const comparisonTables: ComparisonTable[] = [
   },
   {
     tab: 'profesional',
-    planNames: ['Profesional', 'Profesional Avanzado', 'Profesional Total'],
+    planNames: ['Isaak Pro', 'Isaak Pro Basic', 'Isaak Pro Plus'],
     rows: [
-      { label: 'Precio mensual', values: ['29 € + IVA', '49 € + IVA', 'Por definir'] },
+      { label: 'Precio mensual', values: ['29 € + IVA', '49 € + IVA', '79 € + IVA'] },
       { label: 'Usuarios incluidos', values: ['1', '3', 'Por definir'] },
       { label: 'Empresas/autónomos incluidos', values: ['1', '2', 'Por definir'] },
-      { label: 'Créditos IA / mes', values: ['1.000', '2.500', 'Por definir'] },
+      { label: 'Créditos IA / mes', values: ['1.000', '2.500', '4.000'] },
       { label: 'Facturación VeriFactu', values: ['Sí', 'Sí', 'Sí'] },
       { label: 'Límite de facturas VeriFactu / mes', values: ['50', '250', 'Por definir'] },
       {
@@ -348,8 +348,8 @@ export const creditsSection = {
 };
 
 export const addOns = [
-  { id: 'usuario', label: 'Usuario adicional', price: '9 € + IVA / mes', appliesTo: 'Profesional y Profesional Avanzado' },
-  { id: 'empresa', label: 'Empresa adicional', price: '12 € + IVA / mes', appliesTo: 'Profesional y Profesional Avanzado' },
+  { id: 'usuario', label: 'Usuario adicional', price: '9 € + IVA / mes', appliesTo: 'Isaak Pro e Isaak Pro Basic' },
+  { id: 'empresa', label: 'Empresa adicional', price: '12 € + IVA / mes', appliesTo: 'Isaak Pro e Isaak Pro Basic' },
 ];
 
 export const planSelectorQuiz = {
@@ -359,18 +359,18 @@ export const planSelectorQuiz = {
       id: 'personal',
       label: 'Mi vida personal',
       answer: [
-        'Empieza con Chat si solo quieres preguntar.',
-        'Elige Personal si quieres documentos y avisos.',
-        'Espera Personal Total si necesitas sedes y documentos legales.',
+        'Empieza con Isaak Chat si solo quieres preguntar.',
+        'Elige Isaak Basic si quieres documentos y avisos.',
+        'Espera Isaak Plus si necesitas sedes y documentos legales.',
       ],
     },
     {
       id: 'profesional',
       label: 'Mi negocio',
       answer: [
-        'Elige Profesional si tienes una empresa o eres autónomo.',
-        'Elige Profesional Avanzado si tienes más usuarios, más facturas o más volumen.',
-        'Espera Profesional Total si necesitas sedes, certificado y notificaciones oficiales.',
+        'Elige Isaak Pro si tienes una empresa o eres autónomo.',
+        'Elige Isaak Pro Basic si tienes más usuarios, más facturas o más volumen.',
+        'Espera Isaak Pro Plus si necesitas sedes, certificado y notificaciones oficiales.',
       ],
     },
     {

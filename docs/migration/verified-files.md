@@ -67,6 +67,13 @@ build" con datos que no se han corrido de verdad.
   el modelo de negocio pasa a créditos ponderados en vez de mensajes 1:1, y (b) el precio
   final de "Profesional Total"/"Personal Total". Sin esa confirmación, portar los valores
   fijaría en código un catálogo que ya sabemos que no coincide con lo publicado.
+- **Actualización 2026-07-08 — bloqueo resuelto**: el usuario confirmó (a) créditos
+  ponderados como modelo definitivo y (b) los precios finales — ver
+  `docs/product/PRICING_POLICY_PROPUESTA_2026.md`. `packages/content/src/pricing.ts` ya
+  refleja ambos (incluye el renombrado de planes a Isaak Chat/Basic/Plus y Isaak Pro/Pro
+  Basic/Pro Plus). Sigue pendiente portar el catálogo de valores real a
+  `packages/billing/src/entitlements.ts` — eso ya no está bloqueado por falta de decisión,
+  solo por no haberse ejecutado todavía.
 - PR: —
 
 ### 2. `isaak-pricing-content.ts` → `packages/content/src/pricing.ts`

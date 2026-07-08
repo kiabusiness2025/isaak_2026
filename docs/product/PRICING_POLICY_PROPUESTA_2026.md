@@ -1,12 +1,41 @@
-# Propuesta de política de precios — cierre de la decisión Fase 2
+# Política de precios — decisión confirmada (cierra Fase 2)
 
-> **Estado: PROPUESTA, pendiente de confirmación explícita.** Este documento no cambia
-> `packages/content/src/pricing.ts` ni crea ningún Price ID de Stripe — es la resolución
-> propuesta al hallazgo crítico documentado en `docs/migration/module-inventory.md`
-> §Fase 2 y ficha #1 de `verified-files.md`. En cuanto se confirme (o se ajuste y luego
-> se confirme), se implementa en un PR aparte que sí toca código.
+> **Estado: CONFIRMADO por el usuario el 2026-07-08.** Los 3 puntos de la propuesta
+> original (§5) fueron aceptados: créditos ponderados como modelo definitivo, precios de
+> "Isaak Plus"/"Isaak Pro Plus" tal como se proponían, y ambos en "Próximamente" (sin
+> Stripe) hasta que sedes/DEHú/certificado estén realmente integrados. Ya implementado en
+> `packages/content/src/pricing.ts` en este mismo PR.
+>
+> **Además se renombraron los planes** (pedido explícito del usuario, con una pequeña
+> corrección de nomenclatura — ver §6):
+>
+> | Antes | Después |
+> | --- | --- |
+> | Chat | **Isaak Chat** |
+> | Personal | **Isaak Basic** |
+> | Personal Total | **Isaak Plus** |
+> | Profesional | **Isaak Pro** |
+> | Profesional Avanzado | **Isaak Pro Basic** |
+> | Profesional Total | **Isaak Pro Plus** |
+>
+> Los `id` internos (`chat`, `personal`, `personal-total`, `profesional`,
+> `profesional-avanzado`, `profesional-total`) **no cambian** — son los identificadores
+> estables para Stripe/entitlements; solo cambia el `name` visible al usuario.
 >
 > Fecha: 2026-07-08.
+
+## 6. Nota sobre "Isaak Pro Basic"
+
+Un aviso honesto, no un bloqueo: en la línea Profesional, "Pro Basic" (49€) es *más caro*
+que "Pro" a secas (29€) — semánticamente "Basic" suele leerse como "más barato", aquí es
+al revés. Lo implementé tal cual se pidió porque en la tabla de precios el número va justo
+al lado del nombre (nadie elige un plan solo por el nombre sin mirar el precio), pero si
+en algún momento genera confusión real de usuarios, la alternativa más limpia sería
+reordenar las etiquetas: "Isaak Pro Basic" (29€, entrada) → "Isaak Pro" (49€, el plan
+estándar) → "Isaak Pro Plus" (79€) — mismo vocabulario, orden semántico coherente. No lo
+apliqué de oficio porque cambiaría el plan que hoy es "el recomendado" (`recommended: true`
+sigue en el antiguo "Profesional"/actual "Isaak Pro", 29€) y prefiero que sea una decisión
+explícita, no un efecto colateral de un renombrado.
 
 ## 1. Unidad de cuota: créditos ponderados (confirmar mantener el modelo ya publicado)
 
