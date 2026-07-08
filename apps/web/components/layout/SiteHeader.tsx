@@ -21,7 +21,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-camel/20 bg-cream/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center" aria-label="Isaak">
+        <Link href="/" className="flex items-center">
           <Image src={brandAssets.wordmark.dark} alt="Isaak" width={120} height={33} priority />
         </Link>
 
