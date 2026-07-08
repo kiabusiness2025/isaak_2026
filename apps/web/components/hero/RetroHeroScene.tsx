@@ -56,10 +56,12 @@ export function RetroHeroScene() {
           </div>
         </motion.div>
 
-        <div className="relative flex min-h-[420px] items-center justify-center lg:min-h-[560px]">
+        <div className="relative flex min-h-[300px] items-center justify-center sm:min-h-[380px] lg:min-h-[560px]">
           <OrbitalLines />
           <div className="relative z-0 flex flex-col items-center gap-6">
-            <IsaakCharacter state={characterState} variant="full" size={340} />
+            <div className="-my-16 scale-[0.62] sm:-my-8 sm:scale-[0.8] lg:my-0 lg:scale-100">
+              <IsaakCharacter state={characterState} variant="full" size={340} />
+            </div>
             <div className="w-full max-w-[22rem] lg:max-w-xs lg:translate-x-8">
               <EntrepreneurScenario />
             </div>

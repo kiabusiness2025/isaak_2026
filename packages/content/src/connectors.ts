@@ -8,7 +8,7 @@ export type ConnectorCategory = {
 export const connectorCategories: ConnectorCategory[] = [
   {
     id: 'programas',
-    label: 'Programas de facturación y ERP',
+    label: 'Facturación y ERP',
     description: 'Isaak lee tus facturas, gastos e inventario sin que cambies de programa.',
     examples: ['Holded', 'Sage', 'A3', 'Odoo', 'Excel'],
   },
@@ -44,7 +44,7 @@ export const connectorCategories: ConnectorCategory[] = [
   },
   {
     id: 'notificaciones',
-    label: 'Notificaciones oficiales',
+    label: 'Notificaciones',
     description: 'Resumen priorizado de lo que de verdad importa esta semana.',
     examples: ['DEHú', 'Notificaciones AEAT'],
   },
@@ -56,7 +56,7 @@ export const connectorCategories: ConnectorCategory[] = [
   },
   {
     id: 'mensajeria',
-    label: 'WhatsApp / Telegram / email',
+    label: 'WhatsApp y Telegram',
     description: 'Avisos y resúmenes por el canal que ya usas cada día.',
     examples: ['WhatsApp Business', 'Telegram', 'Email'],
   },

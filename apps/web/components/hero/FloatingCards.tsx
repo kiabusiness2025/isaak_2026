@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
+import type { MouseEvent, ReactNode } from 'react';
 import { hero } from '@isaak/content';
 
 const POSITIONS = [
@@ -19,6 +20,41 @@ const POSITIONS = [
  * fuera del desktop; tampoco aparece en la tira móvil (que ya usa solo las 5 primeras).
  */
 const DESKTOP_CARD_IDS = ['factura', 'banco', 'modelo-303', 'notificacion-aeat', 'calendario', 'documento'];
+
+const MAGNETIC_RANGE = 14;
+
+/** Desplaza la tarjeta 4-8px hacia el cursor, con muelle suave, y vuelve al reposo al salir. */
+function MagneticCard({ children }: { children: ReactNode }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 180, damping: 16, mass: 0.4 });
+  const springY = useSpring(y, { stiffness: 180, damping: 16, mass: 0.4 });
+
+  function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const relX = (event.clientX - rect.left) / rect.width - 0.5;
+    const relY = (event.clientY - rect.top) / rect.height - 0.5;
+    x.set(relX * MAGNETIC_RANGE);
+    y.set(relY * MAGNETIC_RANGE);
+  }
+
+  function handleMouseLeave() {
+    x.set(0);
+    y.set(0);
+  }
+
+  return (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ x: springX, y: springY }}
+      whileHover={{ scale: 1.03 }}
+      transition={{ scale: { duration: 0.25, ease: [0.16, 1, 0.3, 1] } }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export function FloatingCards() {
   const cards = hero.floatingCards.filter((card) => DESKTOP_CARD_IDS.includes(card.id));
@@ -43,12 +79,13 @@ export function FloatingCards() {
               delay: index * 0.3,
             },
           }}
-          whileHover={{ y: -6, scale: 1.03 }}
         >
-          <div className="rounded-xl border border-beige/70 bg-cream/70 p-3 shadow-glass backdrop-blur-md">
-            <p className="text-xs font-semibold text-chocolate">{card.label}</p>
-            <p className="mt-1 text-[11px] text-chocolate/60">{card.detail}</p>
-          </div>
+          <MagneticCard>
+            <div className="rounded-xl border border-beige/70 bg-cream/70 p-3 shadow-glass backdrop-blur-md">
+              <p className="text-xs font-semibold text-chocolate">{card.label}</p>
+              <p className="mt-1 text-[11px] text-chocolate/60">{card.detail}</p>
+            </div>
+          </MagneticCard>
         </motion.div>
       ))}
     </div>

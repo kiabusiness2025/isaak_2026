@@ -148,6 +148,25 @@ export function IsaakCharacter({ size = 260, state = 'idle', variant = 'circle' 
             <BlinkingEye left="55%" reducedMotion={reducedMotion} />
           </>
         )}
+
+        {/* Luz azul de fondo, pulso lento y constante — el rasgo "vivo" base del
+            personaje, no ligado a ningún estado concreto (bible: "luz azul con
+            pulso lento"). Distinta del brillo cobre, que solo aparece al conectar. */}
+        {variant === 'circle' && !reducedMotion && (
+          <motion.div
+            aria-hidden="true"
+            className="absolute rounded-full"
+            style={{
+              left: '20%',
+              top: '36%',
+              width: '9%',
+              height: '9%',
+              background: 'radial-gradient(circle, rgba(47,94,158,0.55) 0%, rgba(47,94,158,0) 70%)',
+            }}
+            animate={{ opacity: [0.35, 0.8, 0.35], scale: [1, 1.15, 1] }}
+            transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        )}
       </motion.div>
 
       {/* Sello de confirmación */}

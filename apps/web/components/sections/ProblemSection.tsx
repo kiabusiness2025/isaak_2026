@@ -3,6 +3,25 @@
 import { motion } from 'framer-motion';
 import { problem } from '@isaak/content';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { IsaakCharacter } from '@/components/hero/IsaakCharacter';
+
+type ChaosCard = {
+  label: string;
+  chaos: { x: number; y: number; rotate: number };
+  settled: { x: number; y: number };
+};
+
+// Cada tarjeta nace dispersa (posición/rotación "caótica") y converge, al entrar
+// en el viewport, hacia una lista ordenada junto a Isaak — la sección entera es
+// la animación "chaos-to-clarity": lo que se mueve es el desorden, no un adorno.
+const CHAOS_CARDS: ChaosCard[] = [
+  { label: 'Facturas', chaos: { x: 8, y: 18, rotate: -12 }, settled: { x: 150, y: 6 } },
+  { label: 'Banco', chaos: { x: 150, y: 4, rotate: 9 }, settled: { x: 150, y: 54 } },
+  { label: 'Correo', chaos: { x: 0, y: 130, rotate: -8 }, settled: { x: 150, y: 102 } },
+  { label: 'Documentos', chaos: { x: 165, y: 165, rotate: 14 }, settled: { x: 150, y: 150 } },
+  { label: 'Modelo 303', chaos: { x: 55, y: 220, rotate: -6 }, settled: { x: 150, y: 198 } },
+  { label: 'Notificación', chaos: { x: 175, y: 250, rotate: 10 }, settled: { x: 150, y: 246 } },
+];
 
 export function ProblemSection() {
   return (
@@ -32,23 +51,21 @@ export function ProblemSection() {
           </ScrollReveal>
 
           <ScrollReveal delay={0.15}>
-            <div className="relative mx-auto grid max-w-sm grid-cols-2 gap-3">
-              {[
-                'Facturas',
-                'Banco',
-                'Correo',
-                'Documentos',
-                'Modelo 303',
-                'Notificación',
-              ].map((label, index) => (
+            <div className="relative mx-auto h-[320px] w-full max-w-sm">
+              <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                <IsaakCharacter size={104} state="idle" />
+              </div>
+
+              {CHAOS_CARDS.map((card, index) => (
                 <motion.div
-                  key={label}
-                  initial={{ rotate: 0 }}
-                  animate={{ rotate: [-3, 3, -2, 2, 0][index % 5] }}
-                  transition={{ duration: 0.6, delay: index * 0.05 }}
-                  className="rounded-xl border border-camel/40 bg-cream/80 px-4 py-6 text-center text-sm font-medium text-chocolate/70 shadow-glass"
+                  key={card.label}
+                  className="absolute left-0 top-0 w-32 rounded-xl border border-camel/40 bg-cream/80 px-3 py-4 text-center text-sm font-medium text-chocolate/70 shadow-glass"
+                  initial={{ x: card.chaos.x, y: card.chaos.y, rotate: card.chaos.rotate, opacity: 0 }}
+                  whileInView={{ x: card.settled.x, y: card.settled.y, rotate: 0, opacity: 1 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.9, delay: 0.15 + index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  {label}
+                  {card.label}
                 </motion.div>
               ))}
             </div>
